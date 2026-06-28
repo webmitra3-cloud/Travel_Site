@@ -1,0 +1,31 @@
+# Environment and secrets
+.env
+backend/.env
+*.env.local
+
+# Python
+venv/
+.venv/
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+*.sqlite3
+local.sqlite3
+backend/staticfiles/
+
+# Django/media local uploads
+backend/media/
+
+# Node/Vite
+frontend/node_modules/
+frontend/dist/
+frontend/.env.local
+frontend/.env.*.local
+frontend/tsconfig.tsbuildinfo
+
+# OS/editor
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/

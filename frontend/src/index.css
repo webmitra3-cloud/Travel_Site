@@ -1,0 +1,66 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  body {
+    @apply font-poppins bg-gray-50 text-charcoal dark:bg-charcoal dark:text-gray-100 transition-colors duration-300;
+  }
+  
+  h1, h2, h3, h4, h5, h6 {
+    @apply font-playfair text-charcoal dark:text-white;
+  }
+}
+
+/* Custom scrollbar styling for luxury aesthetic */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+::-webkit-scrollbar-track {
+  @apply bg-gray-100 dark:bg-charcoal-light;
+}
+::-webkit-scrollbar-thumb {
+  @apply bg-primary rounded hover:bg-primary-dark transition-colors;
+}
+
+/* Smooth page transitions */
+.fade-in {
+  animation: fadeIn 0.5s ease-in-out forwards;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes slideDown {
+  from { opacity: 0; transform: translateY(-30px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* Glassmorphism utility card styling */
+.glass-card {
+  @apply bg-white/85 dark:bg-charcoal-light/85 backdrop-blur-md border border-gray-100 dark:border-charcoal/30 shadow-xl;
+}
+
+/* Hide scrollbar but keep scroll functionality (for mobile tab strips) */
+.scrollbar-hide {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+.scrollbar-hide::-webkit-scrollbar {
+  display: none;
+}
+
+/* Mobile touch improvements */
+@media (max-width: 768px) {
+  button, a, [role="button"] {
+    -webkit-tap-highlight-color: transparent;
+  }
+  
+  /* Ensure inputs are large enough to tap on mobile */
+  input, select, textarea {
+    font-size: 16px; /* Prevents iOS zoom on focus */
+  }
+}
