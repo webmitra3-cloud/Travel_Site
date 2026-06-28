@@ -74,7 +74,17 @@ Application Entry point: application
 Python version: 3.10+ if available
 ```
 
-If you deploy to a subdomain, use that subdomain as the app URL/domain in cPanel.
+For this project, point the backend Python app to:
+
+```text
+api.regalrivulet.com
+```
+
+Point the React frontend/domain to:
+
+```text
+regalrivulet.com
+```
 
 ## 4. Configure Environment
 
@@ -91,7 +101,7 @@ Example production config:
 ```env
 SECRET_KEY=replace-with-a-strong-secret-key
 DEBUG=False
-ALLOWED_HOSTS=yourdomain.com,www.yourdomain.com
+ALLOWED_HOSTS=api.regalrivulet.com,regalrivulet.com,www.regalrivulet.com
 
 DB_ENGINE=django.db.backends.mysql
 DB_NAME=youruser_hotel
@@ -101,7 +111,8 @@ DB_HOST=localhost
 DB_PORT=3306
 
 CORS_ALLOW_ALL_ORIGINS=False
-CORS_ALLOWED_ORIGINS=https://yourdomain.com,https://www.yourdomain.com
+CORS_ALLOWED_ORIGINS=https://regalrivulet.com,https://www.regalrivulet.com
+CSRF_TRUSTED_ORIGINS=https://regalrivulet.com,https://www.regalrivulet.com,https://api.regalrivulet.com
 
 EMAIL_BACKEND=django.core.mail.backends.smtp.EmailBackend
 EMAIL_HOST=mail.yourdomain.com
