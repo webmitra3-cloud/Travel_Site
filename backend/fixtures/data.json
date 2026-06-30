@@ -1,0 +1,631 @@
+{
+  "homepage_content": {
+    "heritage_subtitle": "Our Heritage",
+    "heritage_title": "A Sanctuary of Comfort in Singapore",
+    "heritage_paragraph_1": "Regal Rivulet Retreat offers refined hospitality, modern comfort, and calm design for travellers visiting Singapore for leisure, business, events, and family holidays.",
+    "heritage_paragraph_2": "Every booking is reviewed carefully by our team to ensure a smooth, secure, and personalised guest experience from arrival to checkout.",
+    "stat_1_number": "80+",
+    "stat_1_label": "Luxury Rooms",
+    "stat_2_number": "24/7",
+    "stat_2_label": "Guest Care",
+    "image_1": "https://images.unsplash.com/photo-1566073771259-6a8506099945?auto=format&fit=crop&w=1600&q=80",
+    "image_2": "https://images.unsplash.com/photo-1551882547-ff40c63fe5fa?auto=format&fit=crop&w=1600&q=80"
+  },
+  "rooms": [
+    {
+      "room_name": "Deluxe King Room",
+      "slug": "deluxe-king-room",
+      "room_type": "Deluxe",
+      "description": "A spacious Singapore-style deluxe room with a king bed, warm lighting, work desk, smart TV, minibar, and calm city-hotel interiors.",
+      "price_per_night": "180.00",
+      "capacity": 2,
+      "total_units": 5,
+      "availability_status": "AVAILABLE",
+      "cover_image": "https://images.unsplash.com/photo-1611892440504-42a792e24d32?auto=format&fit=crop&w=1600&q=80"
+    },
+    {
+      "room_name": "Deluxe Twin Room",
+      "slug": "deluxe-twin-room",
+      "room_type": "Deluxe",
+      "description": "A comfortable twin-bed room for friends or business travellers, designed with soft bedding, high-speed Wi-Fi, and modern bathroom amenities.",
+      "price_per_night": "175.00",
+      "capacity": 2,
+      "total_units": 4,
+      "availability_status": "AVAILABLE",
+      "cover_image": "https://images.unsplash.com/photo-1590490360182-c33d57733427?auto=format&fit=crop&w=1600&q=80"
+    },
+    {
+      "room_name": "Premier Marina View Room",
+      "slug": "premier-marina-view-room",
+      "room_type": "Premier",
+      "description": "A premium room inspired by Marina Bay stays, offering elegant interiors, large windows, and a relaxing city-view atmosphere.",
+      "price_per_night": "240.00",
+      "capacity": 2,
+      "total_units": 4,
+      "availability_status": "AVAILABLE",
+      "cover_image": "https://images.unsplash.com/photo-1582719478250-c89cae4dc85b?auto=format&fit=crop&w=1600&q=80"
+    },
+    {
+      "room_name": "Premier Garden View Room",
+      "slug": "premier-garden-view-room",
+      "room_type": "Premier",
+      "description": "A quiet premium room with fresh decor, soft natural tones, queen bedding, and a peaceful garden-city inspired ambience.",
+      "price_per_night": "230.00",
+      "capacity": 2,
+      "total_units": 3,
+      "availability_status": "AVAILABLE",
+      "cover_image": "https://images.unsplash.com/photo-1566665797739-1674de7a421a?auto=format&fit=crop&w=1600&q=80"
+    },
+    {
+      "room_name": "Executive Club King Room",
+      "slug": "executive-club-king-room",
+      "room_type": "Executive",
+      "description": "A business-friendly executive room with a king bed, reading chair, workstation, coffee station, and upgraded bathroom facilities.",
+      "price_per_night": "285.00",
+      "capacity": 2,
+      "total_units": 3,
+      "availability_status": "AVAILABLE",
+      "cover_image": "https://images.unsplash.com/photo-1578683010236-d716f9a3f461?auto=format&fit=crop&w=1600&q=80"
+    },
+    {
+      "room_name": "Executive Club Twin Room",
+      "slug": "executive-club-twin-room",
+      "room_type": "Executive",
+      "description": "An executive twin room suited for corporate guests, featuring two beds, refined decor, premium linen, and fast connectivity.",
+      "price_per_night": "275.00",
+      "capacity": 2,
+      "total_units": 3,
+      "availability_status": "AVAILABLE",
+      "cover_image": "https://images.unsplash.com/photo-1598928506311-c55ded91a20c?auto=format&fit=crop&w=1600&q=80"
+    },
+    {
+      "room_name": "Orchard Business Room",
+      "slug": "orchard-business-room",
+      "room_type": "Business",
+      "description": "A practical business room inspired by Singapore’s Orchard district, with a large desk, city-hotel comfort, and quiet sleeping space.",
+      "price_per_night": "210.00",
+      "capacity": 1,
+      "total_units": 4,
+      "availability_status": "AVAILABLE",
+      "cover_image": "https://images.unsplash.com/photo-1596394516093-501ba68a0ba6?auto=format&fit=crop&w=1600&q=80"
+    },
+    {
+      "room_name": "Heritage Boutique Room",
+      "slug": "heritage-boutique-room",
+      "room_type": "Boutique",
+      "description": "A boutique-style room combining modern comfort with subtle heritage design, perfect for guests who enjoy elegant details.",
+      "price_per_night": "220.00",
+      "capacity": 2,
+      "total_units": 3,
+      "availability_status": "AVAILABLE",
+      "cover_image": "https://images.unsplash.com/photo-1611892440504-42a792e24d32?auto=format&fit=crop&w=1600&q=80"
+    },
+    {
+      "room_name": "Family Deluxe Room",
+      "slug": "family-deluxe-room",
+      "room_type": "Family",
+      "description": "A family-friendly room with a king bed and sofa bed, ideal for parents travelling with children in Singapore.",
+      "price_per_night": "310.00",
+      "capacity": 4,
+      "total_units": 3,
+      "availability_status": "AVAILABLE",
+      "cover_image": "https://images.unsplash.com/photo-1590490360182-c33d57733427?auto=format&fit=crop&w=1600&q=80"
+    },
+    {
+      "room_name": "Family Connecting Room",
+      "slug": "family-connecting-room",
+      "room_type": "Family",
+      "description": "Two connected rooms designed for families or groups, offering privacy, comfort, and flexible sleeping arrangements.",
+      "price_per_night": "380.00",
+      "capacity": 5,
+      "total_units": 2,
+      "availability_status": "AVAILABLE",
+      "cover_image": "https://images.unsplash.com/photo-1582719478250-c89cae4dc85b?auto=format&fit=crop&w=1600&q=80"
+    },
+    {
+      "room_name": "Junior Suite",
+      "slug": "junior-suite",
+      "room_type": "Suite",
+      "description": "A stylish junior suite with a separate sitting area, king bed, premium bathroom setup, and a comfortable lounge feel.",
+      "price_per_night": "420.00",
+      "capacity": 3,
+      "total_units": 2,
+      "availability_status": "AVAILABLE",
+      "cover_image": "https://images.unsplash.com/photo-1566665797739-1674de7a421a?auto=format&fit=crop&w=1600&q=80"
+    },
+    {
+      "room_name": "Marina Bay Suite",
+      "slug": "marina-bay-suite",
+      "room_type": "Suite",
+      "description": "A luxury suite inspired by Singapore’s Marina Bay skyline, with an elegant lounge area, premium bedding, and refined guest amenities.",
+      "price_per_night": "560.00",
+      "capacity": 3,
+      "total_units": 2,
+      "availability_status": "AVAILABLE",
+      "cover_image": "https://images.unsplash.com/photo-1578683010236-d716f9a3f461?auto=format&fit=crop&w=1600&q=80"
+    },
+    {
+      "room_name": "Singapore River Suite",
+      "slug": "singapore-river-suite",
+      "room_type": "Suite",
+      "description": "A calm and spacious suite with river-city inspired design, living area, king bed, and luxury bathroom amenities.",
+      "price_per_night": "520.00",
+      "capacity": 3,
+      "total_units": 2,
+      "availability_status": "AVAILABLE",
+      "cover_image": "https://images.unsplash.com/photo-1598928506311-c55ded91a20c?auto=format&fit=crop&w=1600&q=80"
+    },
+    {
+      "room_name": "Garden City Suite",
+      "slug": "garden-city-suite",
+      "room_type": "Suite",
+      "description": "A peaceful suite inspired by Singapore’s garden-city identity, designed with natural tones, soft lighting, and modern comfort.",
+      "price_per_night": "500.00",
+      "capacity": 3,
+      "total_units": 2,
+      "availability_status": "AVAILABLE",
+      "cover_image": "https://images.unsplash.com/photo-1596394516093-501ba68a0ba6?auto=format&fit=crop&w=1600&q=80"
+    },
+    {
+      "room_name": "Presidential Suite",
+      "slug": "presidential-suite",
+      "room_type": "Presidential",
+      "description": "A top-level luxury suite with grand bedroom, spacious lounge, dining corner, premium amenities, and VIP guest comfort.",
+      "price_per_night": "1250.00",
+      "capacity": 4,
+      "total_units": 1,
+      "availability_status": "AVAILABLE",
+      "cover_image": "https://images.unsplash.com/photo-1582719478250-c89cae4dc85b?auto=format&fit=crop&w=1600&q=80"
+    },
+    {
+      "room_name": "Honeymoon Suite",
+      "slug": "honeymoon-suite",
+      "room_type": "Romantic",
+      "description": "A romantic suite for couples with soft lighting, king bed, relaxing bath amenities, and elegant Singapore city-stay ambience.",
+      "price_per_night": "620.00",
+      "capacity": 2,
+      "total_units": 1,
+      "availability_status": "AVAILABLE",
+      "cover_image": "https://images.unsplash.com/photo-1578683010236-d716f9a3f461?auto=format&fit=crop&w=1600&q=80"
+    },
+    {
+      "room_name": "Accessible Comfort Room",
+      "slug": "accessible-comfort-room",
+      "room_type": "Accessible",
+      "description": "A thoughtfully designed accessible room with easy movement space, supportive bathroom features, and comfortable modern furniture.",
+      "price_per_night": "190.00",
+      "capacity": 2,
+      "total_units": 2,
+      "availability_status": "AVAILABLE",
+      "cover_image": "https://images.unsplash.com/photo-1590490360182-c33d57733427?auto=format&fit=crop&w=1600&q=80"
+    },
+    {
+      "room_name": "Long Stay Studio",
+      "slug": "long-stay-studio",
+      "room_type": "Studio",
+      "description": "A studio room suitable for longer Singapore stays, including a sitting area, work desk, storage space, and homely comfort.",
+      "price_per_night": "260.00",
+      "capacity": 2,
+      "total_units": 3,
+      "availability_status": "AVAILABLE",
+      "cover_image": "https://images.unsplash.com/photo-1611892440504-42a792e24d32?auto=format&fit=crop&w=1600&q=80"
+    },
+    {
+      "room_name": "Business Studio Suite",
+      "slug": "business-studio-suite",
+      "room_type": "Business Suite",
+      "description": "A studio-style suite for business guests, offering a king bed, work area, lounge chair, fast Wi-Fi, and executive comfort.",
+      "price_per_night": "340.00",
+      "capacity": 2,
+      "total_units": 2,
+      "availability_status": "AVAILABLE",
+      "cover_image": "https://images.unsplash.com/photo-1596394516093-501ba68a0ba6?auto=format&fit=crop&w=1600&q=80"
+    },
+    {
+      "room_name": "Royal Rivulet Penthouse",
+      "slug": "royal-rivulet-penthouse",
+      "room_type": "Penthouse",
+      "description": "The signature penthouse with luxury interiors, skyline-inspired ambience, spacious lounge, premium bedding, and exclusive VIP comfort.",
+      "price_per_night": "1550.00",
+      "capacity": 6,
+      "total_units": 1,
+      "availability_status": "AVAILABLE",
+      "cover_image": "https://images.unsplash.com/photo-1582719478250-c89cae4dc85b?auto=format&fit=crop&w=1600&q=80"
+    }
+  ],
+  "gallery_categories": [
+    {
+      "name": "Rooms"
+    },
+    {
+      "name": "Dining"
+    },
+    {
+      "name": "Events"
+    },
+    {
+      "name": "Singapore Views"
+    },
+    {
+      "name": "Spa & Wellness"
+    },
+    {
+      "name": "Careers"
+    }
+  ],
+  "gallery": [
+    {
+      "title": "Singapore Skyline Arrival",
+      "category": "Singapore Views",
+      "image": "https://images.unsplash.com/photo-1525625293386-3f8f99389edd?auto=format&fit=crop&w=1600&q=80"
+    },
+    {
+      "title": "Deluxe Room Interior",
+      "category": "Rooms",
+      "image": "https://images.unsplash.com/photo-1611892440504-42a792e24d32?auto=format&fit=crop&w=1600&q=80"
+    },
+    {
+      "title": "Premier Room with City Feel",
+      "category": "Rooms",
+      "image": "https://images.unsplash.com/photo-1582719478250-c89cae4dc85b?auto=format&fit=crop&w=1600&q=80"
+    },
+    {
+      "title": "Executive Guest Room",
+      "category": "Rooms",
+      "image": "https://images.unsplash.com/photo-1578683010236-d716f9a3f461?auto=format&fit=crop&w=1600&q=80"
+    },
+    {
+      "title": "Family Comfort Room",
+      "category": "Rooms",
+      "image": "https://images.unsplash.com/photo-1590490360182-c33d57733427?auto=format&fit=crop&w=1600&q=80"
+    },
+    {
+      "title": "Fine Dining Restaurant",
+      "category": "Dining",
+      "image": "https://images.unsplash.com/photo-1414235077428-338989a2e8c0?auto=format&fit=crop&w=1600&q=80"
+    },
+    {
+      "title": "Modern Singapore Dining Lounge",
+      "category": "Dining",
+      "image": "https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?auto=format&fit=crop&w=1600&q=80"
+    },
+    {
+      "title": "Evening Bar Service",
+      "category": "Dining",
+      "image": "https://images.unsplash.com/photo-1514933651103-005eec06c04b?auto=format&fit=crop&w=1600&q=80"
+    },
+    {
+      "title": "Luxury Spa Treatment Room",
+      "category": "Spa & Wellness",
+      "image": "https://images.unsplash.com/photo-1540555700478-4be289fbecef?auto=format&fit=crop&w=1600&q=80"
+    },
+    {
+      "title": "Banquet and Events Hall",
+      "category": "Events",
+      "image": "https://images.unsplash.com/photo-1519167758481-83f550bb49b3?auto=format&fit=crop&w=1600&q=80"
+    },
+    {
+      "title": "Housekeeping Service Team",
+      "category": "Careers",
+      "image": "https://images.unsplash.com/photo-1581578731548-c64695cc6952?auto=format&fit=crop&w=1600&q=80"
+    },
+    {
+      "title": "Cruise Hospitality Opportunity",
+      "category": "Careers",
+      "image": "https://images.unsplash.com/photo-1548574505-5e239809ee19?auto=format&fit=crop&w=1600&q=80"
+    }
+  ],
+  "about_page_content": {
+    "story_title": "The Story of Regal Rivulet",
+    "story_paragraph_1": "Regal Rivulet Retreat was created as a refined hospitality destination in Singapore, combining city convenience with peaceful luxury accommodation.",
+    "story_paragraph_2": "Our team focuses on comfort, trust, service, safety, clean rooms, quality dining, and memorable guest experiences for every traveller.",
+    "mission_text": "To provide elegant, secure, and personalised hospitality for every guest visiting Singapore.",
+    "vision_text": "To become a trusted luxury retreat known for service, comfort, care, and Singapore-inspired hospitality.",
+    "story_image": "https://images.unsplash.com/photo-1551882547-ff40c63fe5fa?auto=format&fit=crop&w=1600&q=80"
+  },
+  "team": [
+    {
+      "name": "Marcus Tan",
+      "role": "Owner",
+      "bio": "Over 15 years of experience in boutique hotel administration, guest care, and premium hospitality management in Singapore.",
+      "image": "https://images.unsplash.com/photo-1560250097-0b93528c311a?auto=format&fit=crop&w=1600&q=80"
+    },
+    {
+      "name": "Alicia Lim",
+      "role": "Head of Guest Relations",
+      "bio": "Responsible for personalised guest support, smooth check-in experiences, and high-quality customer service.",
+      "image": "https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&w=1600&q=80"
+    },
+    {
+      "name": "Chef Daniel Koh",
+      "role": "Executive Chef",
+      "bio": "Curator of refined local recipes, Singapore-inspired menus, and international fusion banquets.",
+      "image": "https://images.unsplash.com/photo-1577219491135-ce391730fb2c?auto=format&fit=crop&w=1600&q=80"
+    },
+    {
+      "name": "Priya Nair",
+      "role": "Housekeeping Supervisor",
+      "bio": "Leads room cleanliness, linen quality, hygiene standards, and daily guest-room inspection.",
+      "image": "https://images.unsplash.com/photo-1581578731548-c64695cc6952?auto=format&fit=crop&w=1600&q=80"
+    }
+  ],
+  "facilities": [
+    {
+      "name": "Fine Dining Restaurant",
+      "description": "Premium dining with carefully prepared Singapore local favourites and international dishes.",
+      "icon_name": "Utensils"
+    },
+    {
+      "name": "Luxury Spa",
+      "description": "Relaxing wellness treatments, massage services, and quiet recovery spaces for hotel guests.",
+      "icon_name": "Sparkles"
+    },
+    {
+      "name": "Rooftop Pool",
+      "description": "A calm pool area for guests to relax after exploring Singapore.",
+      "icon_name": "Waves"
+    },
+    {
+      "name": "Fitness Centre",
+      "description": "Modern fitness equipment for business travellers and long-stay guests.",
+      "icon_name": "Dumbbell"
+    },
+    {
+      "name": "Airport Transfer",
+      "description": "Pickup and drop-off support for guests arriving through Singapore Changi Airport.",
+      "icon_name": "Car"
+    },
+    {
+      "name": "Event and Banquet Hall",
+      "description": "Elegant space for corporate meetings, private dinners, small weddings, and hospitality events.",
+      "icon_name": "Building2"
+    },
+    {
+      "name": "24/7 Security",
+      "description": "Round-the-clock hotel safety, guest support, CCTV monitoring, and secure entry assistance.",
+      "icon_name": "ShieldCheck"
+    },
+    {
+      "name": "Concierge Desk",
+      "description": "Travel guidance, restaurant booking, local tours, transport help, and guest service support.",
+      "icon_name": "ConciergeBell"
+    }
+  ],
+  "amenities": [
+    {
+      "name": "Free High-Speed Wi-Fi",
+      "description": "Reliable internet access for all rooms, lobby spaces, meeting areas, and dining venues.",
+      "icon_name": "Wifi"
+    },
+    {
+      "name": "Luxury Spa",
+      "description": "Relaxing wellness treatments for hotel guests.",
+      "icon_name": "Sparkles"
+    },
+    {
+      "name": "Fine Dining Restaurant",
+      "description": "Bespoke cuisine and premium guest dining.",
+      "icon_name": "Coffee"
+    },
+    {
+      "name": "Daily Housekeeping",
+      "description": "Clean rooms, fresh towels, quality linen, and hygienic guest-room care every day.",
+      "icon_name": "Bed"
+    },
+    {
+      "name": "Smart TV",
+      "description": "Modern in-room entertainment with international channels and streaming-friendly access.",
+      "icon_name": "Tv"
+    },
+    {
+      "name": "Air Conditioning",
+      "description": "Comfortable room temperature control suitable for Singapore’s tropical climate.",
+      "icon_name": "Wind"
+    },
+    {
+      "name": "Laundry Service",
+      "description": "Laundry and pressing support for business travellers and long-stay guests.",
+      "icon_name": "Shirt"
+    },
+    {
+      "name": "Room Service",
+      "description": "Convenient in-room dining and guest assistance during operating hours.",
+      "icon_name": "Bell"
+    },
+    {
+      "name": "Safe Locker",
+      "description": "Secure in-room storage for passport, money, jewellery, and guest valuables.",
+      "icon_name": "Lock"
+    },
+    {
+      "name": "Coffee and Tea Station",
+      "description": "In-room refreshments with coffee, tea, water, and basic guest supplies.",
+      "icon_name": "Coffee"
+    }
+  ],
+  "testimonials": [
+    {
+      "customer_name": "Alicia Lim",
+      "review": "Beautiful rooms, excellent service, and a very peaceful stay near Singapore’s main attractions.",
+      "rating": 5
+    },
+    {
+      "customer_name": "Jonathan Lee",
+      "review": "The staff were polite, the room was clean, and the city-view atmosphere made the stay special.",
+      "rating": 5
+    },
+    {
+      "customer_name": "Mei Chen",
+      "review": "The restaurant service was excellent and the room felt modern, quiet, and comfortable.",
+      "rating": 5
+    },
+    {
+      "customer_name": "Ravi Kumar",
+      "review": "Good location, smooth check-in, helpful concierge team, and very clean housekeeping standards.",
+      "rating": 4
+    },
+    {
+      "customer_name": "Sofia Tan",
+      "review": "A lovely Singapore hotel experience with warm hospitality, nice dining, and relaxing spa service.",
+      "rating": 5
+    }
+  ],
+  "contact_info": {
+    "address": "Regal Rivulet Retreat, Singapore",
+    "phone": "+65 3123 8899",
+    "email": "info@regalrivulet.com",
+    "map_url": "https://www.google.com/maps?q=Singapore&output=embed"
+  },
+  "vacancies": [
+    {
+      "job_title": "Hotel Manager",
+      "department": "Hotel Operations",
+      "location": "Singapore",
+      "employment_type": "FULL_TIME",
+      "vacancies_count": 1,
+      "salary": "Negotiable",
+      "description": "Responsible for managing daily hotel operations, guest service quality, staff coordination, room readiness, and overall hospitality standards.",
+      "requirements": "Minimum 3 years hotel management experience. Strong leadership, communication, problem-solving, and guest-service skills required.",
+      "benefits": "Accommodation support, meals during duty, performance bonus, training, and growth opportunities.",
+      "deadline": "2026-07-30",
+      "status": "OPEN",
+      "published": true,
+      "attachment": null
+    },
+    {
+      "job_title": "General Cook",
+      "department": "Kitchen",
+      "location": "Singapore",
+      "employment_type": "FULL_TIME",
+      "vacancies_count": 2,
+      "salary": "SGD 2200 - SGD 2800",
+      "description": "Prepare daily hotel meals, support Singapore local dishes and international menu items, maintain food quality, and follow kitchen hygiene standards.",
+      "requirements": "Previous cooking experience preferred. Must understand food safety, cleanliness, teamwork, and basic kitchen preparation.",
+      "benefits": "Duty meals, uniform, training, overtime as per policy, and career growth in hotel kitchen operations.",
+      "deadline": "2026-07-30",
+      "status": "OPEN",
+      "published": true,
+      "attachment": null
+    },
+    {
+      "job_title": "Kitchen Helper",
+      "department": "Kitchen",
+      "location": "Singapore",
+      "employment_type": "FULL_TIME",
+      "vacancies_count": 3,
+      "salary": "SGD 1600 - SGD 2100",
+      "description": "Assist chefs with food preparation, washing, cutting, cleaning kitchen areas, storing supplies, and supporting smooth restaurant service.",
+      "requirements": "Basic kitchen knowledge preferred. Must be hardworking, clean, punctual, and able to work in shifts.",
+      "benefits": "Duty meals, uniform, staff training, service-charge eligibility, and growth opportunities.",
+      "deadline": "2026-07-30",
+      "status": "OPEN",
+      "published": true,
+      "attachment": null
+    },
+    {
+      "job_title": "Waiter/Waitress",
+      "department": "Food and Beverage Service",
+      "location": "Singapore",
+      "employment_type": "FULL_TIME",
+      "vacancies_count": 4,
+      "salary": "SGD 1800 - SGD 2400",
+      "description": "Welcome guests, take orders, serve food and drinks, maintain table presentation, and provide professional restaurant service.",
+      "requirements": "Good communication skills and polite behaviour required. Previous hotel or restaurant service experience is preferred.",
+      "benefits": "Duty meals, uniform, service training, tips or service-charge eligibility, and career development.",
+      "deadline": "2026-07-30",
+      "status": "OPEN",
+      "published": true,
+      "attachment": null
+    },
+    {
+      "job_title": "Cashier",
+      "department": "Front Office / Restaurant Billing",
+      "location": "Singapore",
+      "employment_type": "FULL_TIME",
+      "vacancies_count": 2,
+      "salary": "SGD 1800 - SGD 2300",
+      "description": "Handle guest payments, restaurant billing, POS transactions, receipts, daily cash records, and basic guest billing support.",
+      "requirements": "Basic computer and POS knowledge required. Must be honest, accurate, polite, and comfortable handling payments.",
+      "benefits": "Duty meals, uniform, training, overtime as per policy, and growth opportunities.",
+      "deadline": "2026-07-30",
+      "status": "OPEN",
+      "published": true,
+      "attachment": null
+    },
+    {
+      "job_title": "Room Attendant",
+      "department": "Housekeeping",
+      "location": "Singapore",
+      "employment_type": "FULL_TIME",
+      "vacancies_count": 5,
+      "salary": "SGD 1700 - SGD 2200",
+      "description": "Clean guest rooms, change linen, refill amenities, report maintenance issues, and maintain hotel cleanliness standards.",
+      "requirements": "Housekeeping experience preferred but not compulsory. Must be physically fit, detail-focused, reliable, and able to work shifts.",
+      "benefits": "Duty meals, uniform, housekeeping training, overtime as per policy, and career growth.",
+      "deadline": "2026-07-30",
+      "status": "OPEN",
+      "published": true,
+      "attachment": null
+    },
+    {
+      "job_title": "Security Officer",
+      "department": "Security",
+      "location": "Singapore",
+      "employment_type": "FULL_TIME",
+      "vacancies_count": 2,
+      "salary": "SGD 2200 - SGD 3000",
+      "description": "Monitor hotel entry points, support guest safety, manage incident reports, assist with emergencies, and maintain secure hotel operations.",
+      "requirements": "Security experience preferred. Must be alert, disciplined, polite, and able to work rotating shifts.",
+      "benefits": "Uniform, duty meals, shift allowance where applicable, safety training, and stable employment.",
+      "deadline": "2026-07-30",
+      "status": "OPEN",
+      "published": true,
+      "attachment": null
+    },
+    {
+      "job_title": "Ship Cruise Member",
+      "department": "Cruise Hospitality",
+      "location": "Singapore",
+      "employment_type": "CONTRACT",
+      "vacancies_count": 6,
+      "salary": "SGD 2000 - SGD 3200",
+      "description": "Support cruise hospitality operations connected with Singapore travel, including guest service, cabin support, dining assistance, and onboard coordination.",
+      "requirements": "Hospitality experience preferred. Must have good communication skills, teamwork, discipline, and willingness to work on cruise schedules.",
+      "benefits": "Meals during duty, accommodation during cruise duty, training, travel exposure, and contract completion benefits.",
+      "deadline": "2026-07-30",
+      "status": "OPEN",
+      "published": true,
+      "attachment": null
+    },
+    {
+      "job_title": "Housekeeping Staff",
+      "department": "Housekeeping",
+      "location": "Singapore",
+      "employment_type": "FULL_TIME",
+      "vacancies_count": 4,
+      "salary": "SGD 1700 - SGD 2200",
+      "description": "Maintain cleanliness in rooms, corridors, lobby areas, linen rooms, and public hotel spaces according to hotel hygiene standards.",
+      "requirements": "Must be reliable, physically fit, clean, punctual, and able to follow supervisor instructions.",
+      "benefits": "Duty meals, uniform, cleaning training, overtime as per policy, and internal promotion opportunities.",
+      "deadline": "2026-07-30",
+      "status": "OPEN",
+      "published": true,
+      "attachment": null
+    },
+    {
+      "job_title": "Delivery Boy",
+      "department": "Guest Service / Delivery Support",
+      "location": "Singapore",
+      "employment_type": "FULL_TIME",
+      "vacancies_count": 2,
+      "salary": "SGD 1800 - SGD 2400",
+      "description": "Deliver guest items, food parcels, hotel supplies, and local delivery orders safely and on time within Singapore service areas.",
+      "requirements": "Must be punctual, polite, responsible, and familiar with local delivery routes. Valid riding or driving licence preferred if required by duty.",
+      "benefits": "Duty meals, uniform, delivery allowance where applicable, training, and growth opportunities.",
+      "deadline": "2026-07-30",
+      "status": "OPEN",
+      "published": true,
+      "attachment": null
+    }
+  ]
+}
