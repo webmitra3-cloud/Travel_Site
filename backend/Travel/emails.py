@@ -107,7 +107,8 @@ def get_luxury_email_wrapper(content):
             </div>
             <div class="footer">
                 <p>&copy; 2026 Regal Rivulet Retreat Hotel Singapore. All rights reserved.</p>
-                <p>10 Bayfront Avenue, Singapore 018956</p>
+                <p>Singapore</p>
+                <p>+447441392410 | info@regalrivulet.com</p>
             </div>
         </div>
     </body>
@@ -130,7 +131,7 @@ def send_booking_created_email(booking):
 
         <p><strong>Action Required:</strong> To secure and confirm your booking, please submit payment proof within 24 hours. Follow the link below to select your payment method (eSewa, Khalti, FonePay, or Bank Transfer) and upload your payment screenshot.</p>
         <p style="text-align:center;">
-            <a href="http://localhost:5173/dashboard/bookings/{booking.id}" class="gold-btn">Submit Payment Proof</a>
+            <a href="{settings.FRONTEND_URL}/dashboard/bookings/{booking.id}" class="gold-btn">Submit Payment Proof</a>
         </p>
         <p>If you have any questions, please contact our support desk.</p>
     """)
@@ -188,7 +189,7 @@ def send_payment_rejected_email(booking, reason):
         <p>Your booking status remains <strong>PENDING_PAYMENT</strong>. Please ensure the amount matches, the transaction ID is correct, the screenshot is readable, and try re-submitting your payment details.</p>
         
         <p style="text-align:center;">
-            <a href="http://localhost:5173/dashboard/bookings/{booking.id}" class="gold-btn">Re-submit Payment Proof</a>
+            <a href="{settings.FRONTEND_URL}/dashboard/bookings/{booking.id}" class="gold-btn">Re-submit Payment Proof</a>
         </p>
         
         <p>If you believe this is an error, please reach out directly with your transaction receipt.</p>

@@ -26,6 +26,12 @@ class RegisterView(generics.CreateAPIView):
     serializer_class = RegisterSerializer
 
 
+class UserListView(generics.ListAPIView):
+    queryset = User.objects.all().order_by('-created_at')
+    permission_classes = (IsAdminOrManager,)
+    serializer_class = UserSerializer
+
+
 class CustomTokenObtainPairView(TokenObtainPairView):
     serializer_class = CustomTokenObtainPairSerializer
 

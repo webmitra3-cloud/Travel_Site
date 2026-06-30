@@ -23,6 +23,10 @@ const AdminDashboard = () => {
     // Tabs: ANALYTICS, VERIFICATION, ROOMS, USERS, CMS, AUDIT_LOGS
     const [activeTab, setActiveTab] = useState(searchParams.get('tab') || 'ANALYTICS');
 
+    const refreshPublicData = () => {
+        queryClient.invalidateQueries();
+    };
+
     // Selected user for booking history lookup
     const [selectedUser, setSelectedUser] = useState<any | null>(null);
 
@@ -252,6 +256,7 @@ const AdminDashboard = () => {
         onSuccess: () => {
             queryClient.invalidateQueries({ queryKey: ['admin-rooms'] });
             queryClient.invalidateQueries({ queryKey: ['admin-audits'] });
+            refreshPublicData();
             setIsRoomModalOpen(false);
             setEditingRoom(null);
             setRoomCoverFile(null);
@@ -278,6 +283,7 @@ const AdminDashboard = () => {
         onSuccess: () => {
             queryClient.invalidateQueries({ queryKey: ['admin-rooms'] });
             queryClient.invalidateQueries({ queryKey: ['admin-audits'] });
+            refreshPublicData();
             alert('Room soft-deleted successfully.');
         }
     });
@@ -299,6 +305,7 @@ const AdminDashboard = () => {
         onSuccess: () => {
             queryClient.invalidateQueries({ queryKey: ['admin-slides'] });
             queryClient.invalidateQueries({ queryKey: ['admin-audits'] });
+            refreshPublicData();
             setIsSlideModalOpen(false);
             setEditingSlide(null);
             setSlideImageFile(null);
@@ -316,6 +323,7 @@ const AdminDashboard = () => {
         onSuccess: () => {
             queryClient.invalidateQueries({ queryKey: ['admin-slides'] });
             queryClient.invalidateQueries({ queryKey: ['admin-audits'] });
+            refreshPublicData();
             alert('Banner slide deleted successfully.');
         }
     });
@@ -331,6 +339,7 @@ const AdminDashboard = () => {
         onSuccess: () => {
             queryClient.invalidateQueries({ queryKey: ['admin-gallery'] });
             queryClient.invalidateQueries({ queryKey: ['admin-audits'] });
+            refreshPublicData();
             setIsGalleryModalOpen(false);
             setGalleryImageFile(null);
             setGalleryForm({ title: '', category: galleryCategories?.[0]?.id || '' });
@@ -347,6 +356,7 @@ const AdminDashboard = () => {
         onSuccess: () => {
             queryClient.invalidateQueries({ queryKey: ['admin-gallery'] });
             queryClient.invalidateQueries({ queryKey: ['admin-audits'] });
+            refreshPublicData();
             alert('Gallery image deleted successfully.');
         }
     });
@@ -409,6 +419,7 @@ const AdminDashboard = () => {
             queryClient.invalidateQueries({ queryKey: ['admin-vacancies'] });
             queryClient.invalidateQueries({ queryKey: ['admin-audits'] });
             queryClient.invalidateQueries({ queryKey: ['public-vacancies'] });
+            refreshPublicData();
             setIsVacancyModalOpen(false);
             setEditingVacancy(null);
             setVacancyAttachmentFile(null);
@@ -440,6 +451,7 @@ const AdminDashboard = () => {
             queryClient.invalidateQueries({ queryKey: ['admin-vacancies'] });
             queryClient.invalidateQueries({ queryKey: ['admin-audits'] });
             queryClient.invalidateQueries({ queryKey: ['public-vacancies'] });
+            refreshPublicData();
             alert('Vacancy deleted successfully.');
         }
     });

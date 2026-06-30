@@ -5,6 +5,12 @@ import { Helmet } from 'react-helmet-async';
 import api from '../services/api';
 import { Search, MapPin, Briefcase, Calendar, DollarSign, X, FileText, ChevronLeft, ChevronRight, Award } from 'lucide-react';
 
+const asList = (data: any) => {
+    if (Array.isArray(data)) return data;
+    if (Array.isArray(data?.results)) return data.results;
+    return [];
+};
+
 const Vacancies = () => {
     const [searchParams, setSearchParams] = useSearchParams();
 
@@ -21,14 +27,15 @@ const Vacancies = () => {
     const [showApplyModal, setShowApplyModal] = useState(false);
 
     // Apply filters to URL
-    const applyFilters = () => {
+    const applyFilters = (nextPage = 1) => {
         const params: any = {};
         if (search) params.search = search;
         if (department) params.department = department;
         if (location) params.location = location;
         if (employmentType) params.employment_type = employmentType;
         if (ordering) params.ordering = ordering;
-        params.page = String(page);
+        params.page = String(nextPage);
+        setPage(nextPage);
         setSearchParams(params);
     };
 
@@ -59,9 +66,9 @@ const Vacancies = () => {
         }
     });
 
-    // Client-side pagination helper (since public view returns array)
+    // Client-side pagination helper
     const ITEMS_PER_PAGE = 6;
-    const vacancies = data || [];
+    const vacancies = asList(data);
     const totalPages = Math.ceil(vacancies.length / ITEMS_PER_PAGE);
     const paginatedVacancies = vacancies.slice((page - 1) * ITEMS_PER_PAGE, page * ITEMS_PER_PAGE);
 
@@ -155,7 +162,7 @@ const Vacancies = () => {
                     {/* Actions */}
                     <div className="flex space-x-2">
                         <button
-                            onClick={() => { setPage(1); applyFilters(); }}
+                            onClick={() => applyFilters(1)}
                             className="flex-grow bg-primary hover:bg-primary-dark text-charcoal font-bold text-xs uppercase tracking-wider py-3 rounded shadow transition-all"
                         >
                             Search
@@ -257,7 +264,7 @@ const Vacancies = () => {
                     {totalPages > 1 && (
                         <div className="flex justify-center items-center space-x-4 mt-8 pt-6 border-t border-gray-100 dark:border-gray-800">
                             <button
-                                onClick={() => { setPage(prev => Math.max(1, prev - 1)); applyFilters(); }}
+                                onClick={() => applyFilters(Math.max(1, page - 1))}
                                 disabled={page === 1}
                                 className="p-2 border border-gray-200 dark:border-gray-800 rounded hover:bg-primary hover:text-charcoal transition-colors disabled:opacity-40"
                             >
@@ -265,7 +272,7 @@ const Vacancies = () => {
                             </button>
                             <span className="text-xs font-light">Page <b>{page}</b> of <b>{totalPages}</b></span>
                             <button
-                                onClick={() => { setPage(prev => Math.min(totalPages, prev + 1)); applyFilters(); }}
+                                onClick={() => applyFilters(Math.min(totalPages, page + 1))}
                                 disabled={page === totalPages}
                                 className="p-2 border border-gray-200 dark:border-gray-800 rounded hover:bg-primary hover:text-charcoal transition-colors disabled:opacity-40"
                             >

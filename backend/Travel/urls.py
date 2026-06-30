@@ -47,6 +47,10 @@ if os.path.exists(REACT_INDEX):
         with open(REACT_INDEX, 'r') as f:
             return HttpResponse(f.read(), content_type='text/html')
 
+    REACT_DIST = os.path.dirname(REACT_INDEX)
+    REACT_ASSETS = os.path.join(REACT_DIST, 'assets')
+
     urlpatterns += [
-        re_path(r'^(?!api/|admin/|media/|static/).*$', serve_react),
+        re_path(r'^assets/(?P<path>.*)$', static_serve, {'document_root': REACT_ASSETS}),
+        re_path(r'^(?!api/|admin/|media/|static/|assets/).*$', serve_react),
     ]

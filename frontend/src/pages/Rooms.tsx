@@ -5,6 +5,12 @@ import { Helmet } from 'react-helmet-async';
 import api from '../services/api';
 import { Filter, Search, SlidersHorizontal, ArrowUpDown, ShieldCheck } from 'lucide-react';
 
+const asList = (data: any) => {
+    if (Array.isArray(data)) return data;
+    if (Array.isArray(data?.results)) return data.results;
+    return [];
+};
+
 const Rooms = () => {
     const [searchParams, setSearchParams] = useSearchParams();
     
@@ -16,13 +22,23 @@ const Rooms = () => {
     // Filter states
     const [search, setSearch] = useState(searchParams.get('search') || '');
     const [roomType, setRoomType] = useState(searchParams.get('room_type') || '');
-    const [capacity, setCapacity] = useState(searchParams.get('capacity') || '');
+    const [capacity, setCapacity] = useState(searchParams.get('capacity') || guestsUrl || '');
     const [minPrice, setMinPrice] = useState(searchParams.get('min_price') || '');
     const [maxPrice, setMaxPrice] = useState(searchParams.get('max_price') || '');
     const [ordering, setOrdering] = useState(searchParams.get('ordering') || 'popular');
 
+    useEffect(() => {
+        setSearch(searchParams.get('search') || '');
+        setRoomType(searchParams.get('room_type') || '');
+        setCapacity(searchParams.get('capacity') || searchParams.get('guests') || '');
+        setMinPrice(searchParams.get('min_price') || '');
+        setMaxPrice(searchParams.get('max_price') || '');
+        setOrdering(searchParams.get('ordering') || 'popular');
+    }, [searchParams]);
+
     // Update query params in URL
-    const applyFilters = () => {
+    const applyFilters = (e?: React.FormEvent) => {
+        e?.preventDefault();
         const params: any = {};
         if (search) params.search = search;
         if (roomType) params.room_type = roomType;
@@ -34,7 +50,7 @@ const Rooms = () => {
         // Preserve dates
         if (checkInUrl) params.check_in = checkInUrl;
         if (checkOutUrl) params.check_out = checkOutUrl;
-        if (guestsUrl) params.guests = guestsUrl;
+        if (guestsUrl && !capacity) params.capacity = guestsUrl;
 
         setSearchParams(params);
     };
@@ -43,8 +59,13 @@ const Rooms = () => {
     const { data: rooms, isLoading, error } = useQuery({
         queryKey: ['rooms', searchParams.toString()],
         queryFn: async () => {
+            const params: any = Object.fromEntries(searchParams.entries());
+            if (params.guests && !params.capacity) {
+                params.capacity = params.guests;
+                delete params.guests;
+            }
             const { data } = await api.get('/rooms/', {
-                params: Object.fromEntries(searchParams.entries())
+                params
             });
             return data;
         }
@@ -59,6 +80,8 @@ const Rooms = () => {
         setOrdering('popular');
         setSearchParams({});
     };
+
+    const roomList = asList(rooms);
 
     return (
         <div className="max-w-7xl mx-auto px-4 py-12 sm:px-6 lg:px-8 fade-in text-gray-800 dark:text-gray-200">
@@ -77,7 +100,7 @@ const Rooms = () => {
             </div>
 
             {/* Filter Section */}
-            <div className="bg-white dark:bg-charcoal p-4 sm:p-6 rounded-lg shadow-md border border-gray-100 dark:border-gray-800 mb-8">
+            <form onSubmit={applyFilters} className="bg-white dark:bg-charcoal p-4 sm:p-6 rounded-lg shadow-md border border-gray-100 dark:border-gray-800 mb-8">
                 <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-3 items-end">
                     
                     {/* Search - full width on all sizes */}
@@ -143,12 +166,13 @@ const Rooms = () => {
                     {/* Action buttons - span 2 cols on mobile */}
                     <div className="flex space-x-2 col-span-2 md:col-span-1">
                         <button
-                            onClick={applyFilters}
+                            type="submit"
                             className="flex-grow bg-primary hover:bg-primary-dark text-charcoal text-xs uppercase font-bold py-3.5 rounded transition-all shadow-md"
                         >
                             Apply
                         </button>
                         <button
+                            type="button"
                             onClick={resetFilters}
                             className="px-3 border border-gray-200 dark:border-gray-800 text-gray-400 hover:text-white hover:bg-gray-800 rounded transition-colors text-xs"
                             title="Reset Filters"
@@ -158,7 +182,7 @@ const Rooms = () => {
                     </div>
 
                 </div>
-            </div>
+            </form>
 
             {/* Catalog Grid */}
             {isLoading && (
@@ -185,21 +209,21 @@ const Rooms = () => {
                 </div>
             )}
 
-            {!isLoading && !error && rooms?.length === 0 && (
+            {!isLoading && !error && roomList.length === 0 && (
                 <div className="text-center py-20 text-gray-400 font-light">
                     No luxury rooms match your filter queries. Try resetting.
                 </div>
             )}
 
-            {!isLoading && !error && rooms && (
+            {!isLoading && !error && (
                 <>
                     {/* Results count */}
                     <p className="text-xs text-gray-500 dark:text-gray-400 mb-4 font-light">
-                        Showing <b>{rooms.length}</b> {rooms.length === 1 ? 'room' : 'rooms'} available
+                        Showing <b>{roomList.length}</b> {roomList.length === 1 ? 'room' : 'rooms'} available
                     </p>
 
                     <div className="grid grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-6">
-                        {rooms.map((room: any) => (
+                        {roomList.map((room: any) => (
                             <div
                                 key={room.id}
                                 className="bg-white dark:bg-charcoal rounded-xl overflow-hidden shadow border border-gray-100 dark:border-gray-800 flex flex-col group hover:shadow-lg hover:-translate-y-0.5 transition-all duration-200"

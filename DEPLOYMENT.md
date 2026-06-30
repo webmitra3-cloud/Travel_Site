@@ -113,6 +113,13 @@ DB_PORT=3306
 CORS_ALLOW_ALL_ORIGINS=False
 CORS_ALLOWED_ORIGINS=https://regalrivulet.com,https://www.regalrivulet.com
 CSRF_TRUSTED_ORIGINS=https://regalrivulet.com,https://www.regalrivulet.com,https://api.regalrivulet.com
+FRONTEND_URL=https://regalrivulet.com
+
+Frontend production build must use:
+
+```env
+VITE_API_URL=https://api.regalrivulet.com/api/
+```
 
 EMAIL_BACKEND=django.core.mail.backends.smtp.EmailBackend
 EMAIL_HOST=mail.yourdomain.com

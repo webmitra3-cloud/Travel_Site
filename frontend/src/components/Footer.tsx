@@ -1,8 +1,26 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { Phone, Mail, MapPin } from 'lucide-react';
+import { useQuery } from '@tanstack/react-query';
+import api from '../services/api';
+
+const asList = (data: any) => {
+  if (Array.isArray(data)) return data;
+  if (Array.isArray(data?.results)) return data.results;
+  return [];
+};
 
 const Footer: React.FC = () => {
+  const { data: contactInfoList } = useQuery({
+    queryKey: ['contact-info'],
+    queryFn: async () => {
+      const { data } = await api.get('/cms/contact-info/');
+      return data;
+    },
+    retry: false
+  });
+  const contactInfo = asList(contactInfoList)[0];
+
   return (
     <footer className="bg-charcoal text-gray-300 border-t border-primary/20">
       <div className="max-w-7xl mx-auto px-4 py-12 sm:px-6 lg:px-8">
@@ -15,7 +33,7 @@ const Footer: React.FC = () => {
               <span className="text-[10px] tracking-[0.2em] text-gray-400 font-light -mt-1 uppercase">Retreat Hotel Singapore</span>
             </Link>
             <p className="text-sm text-gray-400 font-light leading-relaxed">
-              Luxury Stays. Exceptional Experiences. Discover a sanctuary of peaceful luxury and world-class hospitality in the heart of Kathmandu, Nepal.
+              Luxury Stays. Exceptional Experiences. Discover a sanctuary of peaceful luxury and world-class hospitality in Singapore.
             </p>
             <div className="flex space-x-4">
               <a href="#" className="hover:text-primary transition-colors text-gray-400" aria-label="Facebook">
@@ -48,15 +66,15 @@ const Footer: React.FC = () => {
             <ul className="space-y-3 text-sm">
               <li className="flex items-start space-x-2">
                 <MapPin className="h-5 w-5 text-primary shrink-0" />
-                <span className="text-gray-400">10 Bayfront Avenue, Singapore 018956</span>
+                <span className="text-gray-400">{contactInfo?.address || 'Singapore'}</span>
               </li>
               <li className="flex items-center space-x-2">
                 <Phone className="h-4 w-4 text-primary shrink-0" />
-                <span className="text-gray-400">+977 1 555-BELL</span>
+                <span className="text-gray-400">{contactInfo?.phone || '+447441392410'}</span>
               </li>
               <li className="flex items-center space-x-2">
                 <Mail className="h-4 w-4 text-primary shrink-0" />
-                <span className="text-gray-400">info@booking-bell.com</span>
+                <span className="text-gray-400">{contactInfo?.email || 'info@regalrivulet.com'}</span>
               </li>
             </ul>
           </div>

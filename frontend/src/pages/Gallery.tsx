@@ -6,6 +6,12 @@ import { X, ZoomIn } from 'lucide-react';
 
 const FALLBACK_GALLERY: any[] = [];
 
+const asList = (data: any) => {
+    if (Array.isArray(data)) return data;
+    if (Array.isArray(data?.results)) return data.results;
+    return [];
+};
+
 const Gallery = () => {
     const [selectedCategory, setSelectedCategory] = useState('ALL');
     const [activeImage, setActiveImage] = useState<string | null>(null);
@@ -30,12 +36,15 @@ const Gallery = () => {
         retry: false
     });
 
-    const activeItems = galleryItems && galleryItems.length > 0 ? galleryItems : FALLBACK_GALLERY.filter(item => {
+    const galleryList = asList(galleryItems);
+    const categoryList = asList(categoriesData);
+
+    const activeItems = galleryList.length > 0 ? galleryList : FALLBACK_GALLERY.filter(item => {
         if (selectedCategory === 'ALL') return true;
         return item.category_name === selectedCategory;
     });
 
-    const dynamicCategories = ['ALL', ...(categoriesData?.map((c: any) => c.name) || [])];
+    const dynamicCategories = ['ALL', ...categoryList.map((c: any) => c.name)];
 
     return (
         <div className="max-w-7xl mx-auto px-4 py-12 sm:px-6 lg:px-8 fade-in text-gray-800 dark:text-gray-200">

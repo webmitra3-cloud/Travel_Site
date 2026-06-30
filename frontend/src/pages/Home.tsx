@@ -18,7 +18,7 @@ const FALLBACK_SLIDES = [
   {
     image: "https://images.unsplash.com/photo-1566073771259-6a8506099945?q=80&w=1920",
     title: "A Sanctuary of Peace",
-    subtitle: "Nestled in the breathtaking views of Kathmandu Valley"
+    subtitle: "A peaceful retreat in Singapore"
   },
   {
     image: "https://images.unsplash.com/photo-1582719508461-905c673771fd?q=80&w=1920",
@@ -39,6 +39,12 @@ const FALLBACK_TESTIMONIALS = [
   { customer_name: "Sarah Jenkins", review: "A peaceful sanctuary. The spa treatments are outstanding. Truly an exceptional, premium experience.", rating: 5 }
 ];
 
+const asList = (data: any) => {
+    if (Array.isArray(data)) return data;
+    if (Array.isArray(data?.results)) return data.results;
+    return [];
+};
+
 const Home = () => {
     const navigate = useNavigate();
 
@@ -56,7 +62,8 @@ const Home = () => {
         retry: false
     });
 
-    const activeAnnouncement = activeAnnouncements && activeAnnouncements.length > 0 ? activeAnnouncements[0] : null;
+    const announcementsList = asList(activeAnnouncements);
+    const activeAnnouncement = announcementsList.length > 0 ? announcementsList[0] : null;
 
     // Check sessionStorage only once when announcement data loads
     const [dismissChecked, setDismissChecked] = useState(false);
@@ -133,12 +140,19 @@ const Home = () => {
         retry: false
     });
 
-    const activeSlides = slides && slides.length > 0 ? slides : FALLBACK_SLIDES;
-    const activeTestimonials = testimonials && testimonials.length > 0 ? testimonials : FALLBACK_TESTIMONIALS;
-    const featuredRooms = rooms ? rooms.slice(0, 3) : [];
-    const homepageContent = homepageContentList && homepageContentList.length > 0 ? homepageContentList[0] : null;
-    const activeAmenities = amenitiesData && amenitiesData.length > 0 ? amenitiesData : FALLBACK_AMENITIES;
-    const contactInfo = contactInfoList && contactInfoList.length > 0 ? contactInfoList[0] : null;
+    const slidesList = asList(slides);
+    const testimonialsList = asList(testimonials);
+    const roomsList = asList(rooms);
+    const homepageContents = asList(homepageContentList);
+    const amenitiesList = asList(amenitiesData);
+    const contactInfos = asList(contactInfoList);
+
+    const activeSlides = slidesList.length > 0 ? slidesList : FALLBACK_SLIDES;
+    const activeTestimonials = testimonialsList.length > 0 ? testimonialsList : FALLBACK_TESTIMONIALS;
+    const featuredRooms = roomsList.slice(0, 3);
+    const homepageContent = homepageContents.length > 0 ? homepageContents[0] : null;
+    const activeAmenities = amenitiesList.length > 0 ? amenitiesList : FALLBACK_AMENITIES;
+    const contactInfo = contactInfos.length > 0 ? contactInfos[0] : null;
 
     // Helper to render lucide icons from string name
     const renderIcon = (iconName: string) => {
@@ -314,7 +328,7 @@ const Home = () => {
                         <span className="text-primary font-bold text-xs uppercase tracking-[0.2em]">{homepageContent?.heritage_subtitle || "Our Heritage"}</span>
                         <h2 className="font-playfair text-4xl sm:text-5xl font-bold text-gray-900 dark:text-white">{homepageContent?.heritage_title || "A Sanctuary of Soul and Elegance"}</h2>
                         <p className="text-gray-600 dark:text-gray-300 font-light leading-relaxed">
-                            {homepageContent?.heritage_paragraph_1 || "Inspired by the historic temples and architecture of Nepal, Regal Rivulet Retreat brings together ancient traditions and modern conveniences. Set inside a meticulously designed courtyard in Singapore, the hotel boasts handcrafted woodcrafts, traditional architecture, and world-class hospitality."}
+                            {homepageContent?.heritage_paragraph_1 || "Regal Rivulet Retreat brings together refined hospitality, modern comfort, and calm design. Set in Singapore, the hotel offers elegant spaces, thoughtful service, and world-class guest care."}
                         </p>
                         <p className="text-gray-600 dark:text-gray-300 font-light leading-relaxed">
                             {homepageContent?.heritage_paragraph_2 || "Every single booking is manually verified by our reservation administrators to guarantee absolute safety and double-booking avoidance. Relax at our premium spa or experience curated local ingredients at our restaurant."}
@@ -450,34 +464,33 @@ const Home = () => {
                             <MapPin className="h-6 w-6" />
                         </div>
                         <h3 className="font-playfair text-lg font-bold">Address</h3>
-                        <p className="text-sm text-gray-500 dark:text-gray-400 font-light">{contactInfo?.address || "10 Bayfront Avenue, Singapore 018956"}</p>
+                        <p className="text-sm text-gray-500 dark:text-gray-400 font-light">{contactInfo?.address || "Singapore"}</p>
                     </div>
                     <div className="space-y-3 p-8 bg-gray-50 dark:bg-charcoal rounded-lg border border-gray-100 dark:border-gray-800">
                         <div className="p-3 bg-primary/10 rounded-full text-primary w-fit mx-auto">
                             <Phone className="h-6 w-6" />
                         </div>
                         <h3 className="font-playfair text-lg font-bold">Reservations</h3>
-                        <p className="text-sm text-gray-500 dark:text-gray-400 font-light">{contactInfo?.phone || "+977 1 555-BELL"}</p>
+                        <p className="text-sm text-gray-500 dark:text-gray-400 font-light">{contactInfo?.phone || "+447441392410"}</p>
                     </div>
                     <div className="space-y-3 p-8 bg-gray-50 dark:bg-charcoal rounded-lg border border-gray-100 dark:border-gray-800">
                         <div className="p-3 bg-primary/10 rounded-full text-primary w-fit mx-auto">
                             <Mail className="h-6 w-6" />
                         </div>
                         <h3 className="font-playfair text-lg font-bold">Email Support</h3>
-                        <p className="text-sm text-gray-500 dark:text-gray-400 font-light">{contactInfo?.email || "info@booking-bell.com"}</p>
+                        <p className="text-sm text-gray-500 dark:text-gray-400 font-light">{contactInfo?.email || "info@regalrivulet.com"}</p>
                     </div>
                 </div>
             </section>
 
             {showPopup && createPortal(
-                <div className="fixed inset-0 z-[9999] bg-black/60 flex flex-col items-center justify-start animate-[fadeIn_0.3s_ease-out]">
+                <div className="fixed inset-0 z-[9999] bg-black/75 backdrop-blur-sm flex items-center justify-center p-3 sm:p-6 animate-[fadeIn_0.3s_ease-out]">
                     <div
-                        className="w-full max-w-4xl flex flex-col animate-[slideDown_0.3s_ease-out]"
-                        style={{ maxHeight: '100vh' }}
+                        className="w-full max-w-4xl bg-white dark:bg-charcoal rounded-lg overflow-hidden shadow-2xl border border-primary/30 flex flex-col animate-[slideDown_0.3s_ease-out]"
+                        style={{ maxHeight: '92vh' }}
                     >
-                        {/* Dark header bar with title + Skip button */}
-                        <div className="bg-charcoal flex items-center justify-between px-4 sm:px-6 py-3 shadow-lg">
-                            <h3 className="text-white text-sm sm:text-base font-semibold truncate pr-4">
+                        <div className="bg-charcoal flex items-center justify-between gap-4 px-4 sm:px-6 py-4 border-b border-primary/20">
+                            <h3 className="text-white font-playfair text-lg sm:text-2xl font-bold truncate pr-2">
                                 {activeAnnouncement.title}
                             </h3>
                             <button
@@ -485,43 +498,66 @@ const Home = () => {
                                     sessionStorage.setItem(`dismissed_popup_${activeAnnouncement.id}`, 'true');
                                     setPopupClosed(true);
                                 }}
-                                className="bg-primary hover:bg-primary-dark text-charcoal font-bold text-xs uppercase tracking-wider px-5 py-1.5 rounded shadow transition-all shrink-0"
+                                className="bg-primary hover:bg-primary-dark text-charcoal font-bold text-xs uppercase tracking-wider px-5 py-2 rounded shadow transition-all shrink-0"
                             >
                                 Skip
                             </button>
                         </div>
 
-                        {/* Scrollable document content area */}
-                        <div className="bg-gray-100 overflow-y-auto flex-1" style={{ maxHeight: 'calc(100vh - 48px)' }}>
+                        <div className="bg-gray-100 dark:bg-charcoal-dark overflow-y-auto flex-1 p-4 sm:p-8">
                             {activeAnnouncement.attachment ? (
                                 <img
                                     src={activeAnnouncement.attachment}
                                     alt="Official Announcement Notice"
-                                    className="w-full h-auto object-contain block"
+                                    className="w-full h-auto max-h-[72vh] object-contain block rounded border border-gray-200 dark:border-gray-800 bg-white"
                                 />
                             ) : (
-                                /* Generated official notice document */
-                                <div className="bg-white mx-auto max-w-2xl my-4 sm:my-8 border border-gray-300 shadow-md p-6 sm:p-10 font-serif leading-relaxed text-gray-900 text-left">
-                                    <div className="text-center border-b-2 border-double border-red-800 pb-4 mb-6">
-                                        <h4 className="text-sm font-bold tracking-wider uppercase text-red-800">Regal Rivulet Retreat Hotel</h4>
-                                        <h2 className="text-lg font-bold uppercase tracking-wide mt-1">Official Vacancy Announcement Notice</h2>
-                                        <p className="text-[10px] text-gray-500 mt-1">First Date of Publication: {new Date(activeAnnouncement.created_at).toLocaleDateString()}</p>
+                                <div className="bg-white mx-auto max-w-3xl border border-gray-200 shadow-xl p-6 sm:p-10 text-gray-900 text-left rounded-sm">
+                                    <div className="text-center pb-6 mb-7 border-b border-primary/40">
+                                        <span className="inline-block text-[10px] sm:text-xs font-bold tracking-[0.26em] uppercase text-primary mb-3">
+                                            Regal Rivulet Retreat Hotel
+                                        </span>
+                                        <h2 className="font-playfair text-2xl sm:text-4xl font-bold tracking-tight text-charcoal leading-tight">
+                                            Official Vacancy Announcement
+                                        </h2>
+                                        <p className="text-xs text-gray-500 mt-3">
+                                            Published {new Date(activeAnnouncement.created_at).toLocaleDateString()}
+                                        </p>
                                     </div>
 
-                                    <h3 className="text-base font-bold underline text-center mb-6">{activeAnnouncement.job_title}</h3>
-                                    <p className="text-xs mb-4 font-semibold text-gray-800 leading-relaxed whitespace-pre-wrap">{activeAnnouncement.message}</p>
+                                    <div className="text-center mb-8">
+                                        <h3 className="font-playfair text-2xl sm:text-3xl font-bold text-charcoal capitalize">
+                                            {activeAnnouncement.job_title}
+                                        </h3>
+                                        <div className="h-0.5 w-16 bg-primary mx-auto mt-3"></div>
+                                    </div>
 
-                                    <div className="text-xs space-y-4 pt-4 border-t border-dashed border-gray-300">
-                                        <div>
-                                            <span className="font-bold block mb-1.5 uppercase text-[10px] tracking-wider text-red-800">Position Details:</span>
-                                            <ul className="list-disc list-inside mt-1 font-sans text-xs text-gray-700 space-y-1">
-                                                <li>Job Position: <span className="font-bold text-gray-900">{activeAnnouncement.job_title}</span></li>
-                                                <li>Application Deadline: <span className="font-bold text-red-600">{activeAnnouncement.deadline}</span></li>
-                                            </ul>
+                                    <p className="text-sm sm:text-base mb-6 font-medium text-gray-700 leading-relaxed text-center whitespace-pre-wrap">
+                                        {activeAnnouncement.message}
+                                    </p>
+
+                                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 my-8">
+                                        <div className="rounded border border-gray-200 bg-gray-50 p-4 text-center">
+                                            <span className="block text-[10px] font-bold uppercase tracking-widest text-gray-400 mb-1">Position</span>
+                                            <span className="font-bold text-charcoal capitalize">{activeAnnouncement.job_title}</span>
                                         </div>
-                                        <p className="text-xs leading-relaxed italic text-gray-500 font-sans mt-4">
-                                            * Interested applicants are requested to visit the Careers &amp; Vacancies page to view full job descriptions, benefits, requirements, and download official attachment guidelines.
-                                        </p>
+                                        <div className="rounded border border-primary/30 bg-primary/10 p-4 text-center">
+                                            <span className="block text-[10px] font-bold uppercase tracking-widest text-gray-500 mb-1">Application Deadline</span>
+                                            <span className="font-bold text-red-600">{activeAnnouncement.deadline}</span>
+                                        </div>
+                                    </div>
+
+                                    <div className="text-center pt-3">
+                                        <Link
+                                            to="/vacancies"
+                                            onClick={() => {
+                                                sessionStorage.setItem(`dismissed_popup_${activeAnnouncement.id}`, 'true');
+                                                setPopupClosed(true);
+                                            }}
+                                            className="inline-flex items-center justify-center bg-primary hover:bg-primary-dark text-charcoal font-bold uppercase text-xs tracking-widest px-7 py-3 rounded transition-all shadow"
+                                        >
+                                            View Vacancy Details
+                                        </Link>
                                     </div>
                                 </div>
                             )}

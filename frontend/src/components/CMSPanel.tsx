@@ -7,33 +7,61 @@ const CMSPanel = () => {
     const queryClient = useQueryClient();
     const [subTab, setSubTab] = useState('GALLERY_CATEGORIES');
 
+    const refreshSiteData = () => {
+        queryClient.invalidateQueries();
+    };
+
     // -- Queries --
     const { data: categories } = useQuery({ queryKey: ['cms', 'categories'], queryFn: async () => (await api.get('/cms/gallery-categories/')).data });
     const { data: homepageContentList } = useQuery({ queryKey: ['cms', 'homepage'], queryFn: async () => (await api.get('/cms/homepage-content/')).data });
     const { data: amenities } = useQuery({ queryKey: ['cms', 'amenities'], queryFn: async () => (await api.get('/cms/amenities/')).data });
+    const { data: testimonials } = useQuery({ queryKey: ['cms', 'testimonials'], queryFn: async () => (await api.get('/cms/testimonials/', { params: { include_deleted: 'true' } })).data });
+    const { data: contactInfoList } = useQuery({ queryKey: ['cms', 'contact-info'], queryFn: async () => (await api.get('/cms/contact-info/')).data });
     const { data: aboutContentList } = useQuery({ queryKey: ['cms', 'about'], queryFn: async () => (await api.get('/cms/about-content/')).data });
     const { data: team } = useQuery({ queryKey: ['cms', 'team'], queryFn: async () => (await api.get('/cms/team/')).data });
     const { data: facilities } = useQuery({ queryKey: ['cms', 'facilities'], queryFn: async () => (await api.get('/cms/facilities/')).data });
 
     // -- Mutations --
     const deleteMutation = useMutation({
-        mutationFn: async ({ endpoint, id }: { endpoint: string, id: number }) => {
+        mutationFn: async ({ endpoint, id }: { endpoint: string, id: string | number }) => {
             await api.delete(`/cms/${endpoint}/${id}/`);
         },
         onSuccess: (_, variables) => {
-            queryClient.invalidateQueries({ queryKey: ['cms'] });
+            refreshSiteData();
             alert(`Deleted from ${variables.endpoint}`);
         }
     });
 
     const createCategoryMutation = useMutation({
         mutationFn: async (name: string) => { await api.post('/cms/gallery-categories/', { name }); },
-        onSuccess: () => { queryClient.invalidateQueries({ queryKey: ['cms'] }); alert('Added Category'); }
+        onSuccess: () => { refreshSiteData(); alert('Added Category'); }
     });
 
     const createAmenityMutation = useMutation({
         mutationFn: async (payload: any) => { await api.post('/cms/amenities/', payload); },
-        onSuccess: () => { queryClient.invalidateQueries({ queryKey: ['cms'] }); alert('Added Amenity'); }
+        onSuccess: () => { refreshSiteData(); alert('Added Amenity'); }
+    });
+
+    const createTestimonialMutation = useMutation({
+        mutationFn: async (payload: any) => { await api.post('/cms/testimonials/', payload); },
+        onSuccess: () => {
+            refreshSiteData();
+            alert('Added Testimonial');
+        }
+    });
+
+    const saveContactInfoMutation = useMutation({
+        mutationFn: async ({ payload, id }: { payload: any, id?: string }) => {
+            if (id) {
+                await api.put(`/cms/contact-info/${id}/`, payload);
+            } else {
+                await api.post('/cms/contact-info/', payload);
+            }
+        },
+        onSuccess: () => {
+            refreshSiteData();
+            alert('Saved Contact Information');
+        }
     });
 
     const createTeamMutation = useMutation({
@@ -43,15 +71,14 @@ const CMSPanel = () => {
             }); 
         },
         onSuccess: () => { 
-            queryClient.invalidateQueries({ queryKey: ['cms'] }); 
-            queryClient.invalidateQueries({ queryKey: ['about-team'] });
+            refreshSiteData();
             alert('Added Team Member'); 
         }
     });
 
     const createFacilityMutation = useMutation({
         mutationFn: async (payload: any) => { await api.post('/cms/facilities/', payload); },
-        onSuccess: () => { queryClient.invalidateQueries({ queryKey: ['cms'] }); alert('Added Facility'); }
+        onSuccess: () => { refreshSiteData(); alert('Added Facility'); }
     });
 
     const saveHomepageMutation = useMutation({
@@ -67,8 +94,7 @@ const CMSPanel = () => {
             }
         },
         onSuccess: () => { 
-            queryClient.invalidateQueries({ queryKey: ['cms'] }); 
-            queryClient.invalidateQueries({ queryKey: ['home-content'] });
+            refreshSiteData();
             alert('Saved Homepage Content'); 
         }
     });
@@ -86,8 +112,7 @@ const CMSPanel = () => {
             }
         },
         onSuccess: () => { 
-            queryClient.invalidateQueries({ queryKey: ['cms'] }); 
-            queryClient.invalidateQueries({ queryKey: ['about-content'] });
+            refreshSiteData();
             alert('Saved About Content'); 
         }
     });
@@ -95,7 +120,7 @@ const CMSPanel = () => {
     return (
         <div className="bg-white dark:bg-charcoal border border-gray-200 dark:border-gray-800 rounded-lg p-6">
             <div className="flex space-x-2 border-b border-gray-200 dark:border-gray-800 pb-4 mb-6 overflow-x-auto">
-                {['GALLERY_CATEGORIES', 'HOMEPAGE', 'AMENITIES', 'ABOUT', 'TEAM', 'FACILITIES'].map(t => (
+                {['GALLERY_CATEGORIES', 'HOMEPAGE', 'AMENITIES', 'TESTIMONIALS', 'CONTACT', 'ABOUT', 'TEAM', 'FACILITIES'].map(t => (
                     <button key={t} onClick={() => setSubTab(t)} className={`px-4 py-2 text-xs font-bold uppercase rounded ${subTab === t ? 'bg-primary text-charcoal' : 'text-gray-500 hover:bg-gray-100 dark:hover:bg-gray-800'}`}>
                         {t.replace('_', ' ')}
                     </button>
@@ -153,7 +178,7 @@ const CMSPanel = () => {
                             <div><label className="block mb-1 font-bold">Stat 2 Number</label><input name="stat_2_number" defaultValue={home.stat_2_number} className="w-full p-2 border rounded dark:bg-charcoal dark:border-gray-700" /></div>
                             <div><label className="block mb-1 font-bold">Stat 2 Label</label><input name="stat_2_label" defaultValue={home.stat_2_label} className="w-full p-2 border rounded dark:bg-charcoal dark:border-gray-700" /></div>
                             <div>
-                                <label className="block mb-1 font-bold">About Image 1 (Nepal Courtyard Style)</label>
+                                <label className="block mb-1 font-bold">About Image 1</label>
                                 <input type="file" name="image_1" className="w-full text-xs" />
                                 {home.image_1 && <img src={home.image_1} alt="About 1 preview" className="h-16 mt-2 rounded object-cover" />}
                             </div>
@@ -227,6 +252,61 @@ const CMSPanel = () => {
                     </div>
                 </div>
             )}
+
+            {/* Testimonials */}
+            {subTab === 'TESTIMONIALS' && (
+                <div className="space-y-4">
+                    <form onSubmit={(e) => {
+                        e.preventDefault();
+                        const fd = Object.fromEntries(new FormData(e.currentTarget));
+                        createTestimonialMutation.mutate({
+                            customer_name: fd.customer_name,
+                            review: fd.review,
+                            rating: Number(fd.rating || 5)
+                        });
+                        e.currentTarget.reset();
+                    }} className="grid grid-cols-1 md:grid-cols-5 gap-2 text-sm">
+                        <input name="customer_name" placeholder="Guest Name" className="p-2 border rounded dark:bg-charcoal dark:border-gray-700" required />
+                        <select name="rating" defaultValue="5" className="p-2 border rounded dark:bg-charcoal dark:border-gray-700">
+                            <option value="5">5 Stars</option>
+                            <option value="4">4 Stars</option>
+                            <option value="3">3 Stars</option>
+                            <option value="2">2 Stars</option>
+                            <option value="1">1 Star</option>
+                        </select>
+                        <input name="review" placeholder="Guest review" className="md:col-span-2 p-2 border rounded dark:bg-charcoal dark:border-gray-700" required />
+                        <button type="submit" className="bg-primary text-charcoal px-4 py-2 rounded font-bold text-xs uppercase flex justify-center items-center"><Plus className="h-4 w-4 mr-1"/> Add Review</button>
+                    </form>
+                    <div className="space-y-2">
+                        {testimonials?.map((t: any) => (
+                            <div key={t.id} className="p-3 border border-gray-200 dark:border-gray-800 rounded flex justify-between items-center text-sm">
+                                <div><strong>{t.customer_name}</strong> ({t.rating}/5) - {t.review}</div>
+                                <button onClick={() => deleteMutation.mutate({ endpoint: 'testimonials', id: t.id })} className="text-red-500"><Trash2 className="h-4 w-4"/></button>
+                            </div>
+                        ))}
+                    </div>
+                </div>
+            )}
+
+            {/* Contact Information */}
+            {subTab === 'CONTACT' && (() => {
+                const contact = contactInfoList?.[0] || {};
+                return (
+                    <form onSubmit={(e) => {
+                        e.preventDefault();
+                        const payload = Object.fromEntries(new FormData(e.currentTarget));
+                        saveContactInfoMutation.mutate({ payload, id: contact.id });
+                    }} className="space-y-4 text-sm">
+                        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                            <div><label className="block mb-1 font-bold">Address</label><textarea name="address" defaultValue={contact.address} className="w-full p-2 border rounded dark:bg-charcoal dark:border-gray-700" required /></div>
+                            <div><label className="block mb-1 font-bold">Google Map Embed URL</label><textarea name="map_url" defaultValue={contact.map_url} className="w-full p-2 border rounded dark:bg-charcoal dark:border-gray-700" /></div>
+                            <div><label className="block mb-1 font-bold">Phone</label><input name="phone" defaultValue={contact.phone} className="w-full p-2 border rounded dark:bg-charcoal dark:border-gray-700" required /></div>
+                            <div><label className="block mb-1 font-bold">Email</label><input name="email" type="email" defaultValue={contact.email} className="w-full p-2 border rounded dark:bg-charcoal dark:border-gray-700" required /></div>
+                        </div>
+                        <button type="submit" className="bg-primary text-charcoal px-4 py-2 rounded font-bold text-xs uppercase">Save Contact Information</button>
+                    </form>
+                );
+            })()}
 
             {/* Team */}
             {subTab === 'TEAM' && (

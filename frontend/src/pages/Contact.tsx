@@ -5,6 +5,7 @@ import * as z from 'zod';
 import { Helmet } from 'react-helmet-async';
 import api from '../services/api';
 import { Phone, Mail, MapPin, Send, MessageSquareCheck } from 'lucide-react';
+import { useQuery } from '@tanstack/react-query';
 
 const messageSchema = z.object({
   name: z.string().min(2, 'Name must be at least 2 characters'),
@@ -16,9 +17,24 @@ const messageSchema = z.object({
 
 type MessageForm = z.infer<typeof messageSchema>;
 
+const asList = (data: any) => {
+    if (Array.isArray(data)) return data;
+    if (Array.isArray(data?.results)) return data.results;
+    return [];
+};
+
 const Contact = () => {
     const [success, setSuccess] = useState('');
     const [error, setError] = useState('');
+    const { data: contactInfoList } = useQuery({
+        queryKey: ['contact-info'],
+        queryFn: async () => {
+            const { data } = await api.get('/cms/contact-info/');
+            return data;
+        },
+        retry: false
+    });
+    const contactInfo = asList(contactInfoList)[0];
 
     const { register, handleSubmit, reset, formState: { errors, isSubmitting } } = useForm<MessageForm>({
         resolver: zodResolver(messageSchema)
@@ -65,7 +81,7 @@ const Contact = () => {
                             </div>
                             <div>
                                 <h4 className="text-xs font-bold uppercase tracking-wider text-gray-400">Address</h4>
-                                <p className="text-sm text-gray-700 dark:text-gray-300 font-light mt-0.5">10 Bayfront Avenue, Singapore 018956</p>
+                                <p className="text-sm text-gray-700 dark:text-gray-300 font-light mt-0.5">{contactInfo?.address || 'Singapore'}</p>
                             </div>
                         </div>
 
@@ -75,7 +91,7 @@ const Contact = () => {
                             </div>
                             <div>
                                 <h4 className="text-xs font-bold uppercase tracking-wider text-gray-400">Call Concierge</h4>
-                                <p className="text-sm text-gray-700 dark:text-gray-300 font-light mt-0.5">+977 1 555-BELL</p>
+                                <p className="text-sm text-gray-700 dark:text-gray-300 font-light mt-0.5">{contactInfo?.phone || '+447441392410'}</p>
                             </div>
                         </div>
 
@@ -85,7 +101,7 @@ const Contact = () => {
                             </div>
                             <div>
                                 <h4 className="text-xs font-bold uppercase tracking-wider text-gray-400">Email Address</h4>
-                                <p className="text-sm text-gray-700 dark:text-gray-300 font-light mt-0.5">info@booking-bell.com</p>
+                                <p className="text-sm text-gray-700 dark:text-gray-300 font-light mt-0.5">{contactInfo?.email || 'info@regalrivulet.com'}</p>
                             </div>
                         </div>
                     </div>
@@ -117,7 +133,6 @@ const Contact = () => {
                                         {...register('name')}
                                         type="text"
                                         className="w-full px-4 py-2 bg-gray-50 dark:bg-charcoal-light border border-gray-200 dark:border-gray-800 rounded focus:ring-1 focus:ring-primary focus:border-primary focus:outline-none text-sm"
-                                        placeholder="John Doe"
                                     />
                                     {errors.name && <p className="mt-1 text-xs text-red-500">{errors.name.message}</p>}
                                 </div>
@@ -127,7 +142,6 @@ const Contact = () => {
                                         {...register('email')}
                                         type="email"
                                         className="w-full px-4 py-2 bg-gray-50 dark:bg-charcoal-light border border-gray-200 dark:border-gray-800 rounded focus:ring-1 focus:ring-primary focus:border-primary focus:outline-none text-sm"
-                                        placeholder="john@example.com"
                                     />
                                     {errors.email && <p className="mt-1 text-xs text-red-500">{errors.email.message}</p>}
                                 </div>
@@ -140,7 +154,6 @@ const Contact = () => {
                                         {...register('phone')}
                                         type="text"
                                         className="w-full px-4 py-2 bg-gray-50 dark:bg-charcoal-light border border-gray-200 dark:border-gray-800 rounded focus:ring-1 focus:ring-primary focus:border-primary focus:outline-none text-sm"
-                                        placeholder="+977"
                                     />
                                     {errors.phone && <p className="mt-1 text-xs text-red-500">{errors.phone.message}</p>}
                                 </div>
@@ -150,7 +163,6 @@ const Contact = () => {
                                         {...register('subject')}
                                         type="text"
                                         className="w-full px-4 py-2 bg-gray-50 dark:bg-charcoal-light border border-gray-200 dark:border-gray-800 rounded focus:ring-1 focus:ring-primary focus:border-primary focus:outline-none text-sm"
-                                        placeholder="Inquiry about..."
                                     />
                                     {errors.subject && <p className="mt-1 text-xs text-red-500">{errors.subject.message}</p>}
                                 </div>
@@ -162,7 +174,6 @@ const Contact = () => {
                                     {...register('message')}
                                     rows={5}
                                     className="w-full px-4 py-2 bg-gray-50 dark:bg-charcoal-light border border-gray-200 dark:border-gray-800 rounded focus:ring-1 focus:ring-primary focus:border-primary focus:outline-none text-sm font-light leading-relaxed"
-                                    placeholder="Write your inquiry here..."
                                 />
                                 {errors.message && <p className="mt-1 text-xs text-red-500">{errors.message.message}</p>}
                             </div>
@@ -186,7 +197,7 @@ const Contact = () => {
                 <h3 className="font-playfair text-2xl font-bold mb-4">Find Us</h3>
                 <div className="h-[400px] w-full bg-gray-200 rounded-lg overflow-hidden border border-gray-200 dark:border-gray-800 shadow-lg relative">
                     <iframe
-                        src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3532.7486807963283!2d85.31976211506168!3d27.69418298279893!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x39eb19ab38b8125b%3A0x82b4a37fb4b2c174!2sKathmandu%2044600!5e0!3m2!1sen!2snp!4v1686259000000!5m2!1sen!2snp"
+                        src={contactInfo?.map_url || 'https://www.google.com/maps?q=Singapore&output=embed'}
                         width="100%"
                         height="100%"
                         style={{ border: 0 }}

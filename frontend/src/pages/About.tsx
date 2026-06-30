@@ -6,9 +6,9 @@ import { useQuery } from '@tanstack/react-query';
 import api from '../services/api';
 
 const FALLBACK_TEAM = [
-  { name: "Leon Noe", role: "Owner", image: "https://images.unsplash.com/photo-1560250097-0b93528c311a?q=80&w=300", bio: "Over 15 years in luxury boutique hotel administration." },
-  { name: "Sita Adhikari", role: "Head of Guest Relations", image: "https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?q=80&w=300", bio: "Ensuring an exceptional, tailored stay for every guest." },
-  { name: "Chef Rajan Thapa", role: "Executive Chef", image: "https://images.unsplash.com/photo-1577219491135-ce391730fb2c?q=80&w=300", bio: "Curator of fine local organic recipes and fusion banquets." }
+  { name: "Marcus Tan", role: "Owner", image: "https://images.unsplash.com/photo-1560250097-0b93528c311a?q=80&w=300", bio: "Over 15 years in luxury boutique hotel administration." },
+  { name: "Alicia Lim", role: "Head of Guest Relations", image: "https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?q=80&w=300", bio: "Ensuring an exceptional, tailored stay for every guest." },
+  { name: "Chef Daniel Koh", role: "Executive Chef", image: "https://images.unsplash.com/photo-1577219491135-ce391730fb2c?q=80&w=300", bio: "Curator of refined local recipes and fusion banquets." }
 ];
 
 const FALLBACK_FACILITIES = [
@@ -17,6 +17,12 @@ const FALLBACK_FACILITIES = [
   { name: "The Mandala Fine Dining", description: "An organic restaurant featuring fresh ingredients from regional farms.", icon_name: "Award" },
   { name: "Elite Business Lounge", description: "Sophisticated corporate settings equipped with global conference tools.", icon_name: "Shield" }
 ];
+
+const asList = (data: any) => {
+    if (Array.isArray(data)) return data;
+    if (Array.isArray(data?.results)) return data.results;
+    return [];
+};
 
 const About = () => {
   return (
@@ -32,9 +38,13 @@ const About = () => {
         const { data: teamData } = useQuery({ queryKey: ['about-team'], queryFn: async () => (await api.get('/cms/team/')).data });
         const { data: facilitiesData } = useQuery({ queryKey: ['about-facilities'], queryFn: async () => (await api.get('/cms/facilities/')).data });
 
-        const aboutContent = aboutContentList && aboutContentList.length > 0 ? aboutContentList[0] : null;
-        const activeTeam = teamData && teamData.length > 0 ? teamData : FALLBACK_TEAM;
-        const activeFacilities = facilitiesData && facilitiesData.length > 0 ? facilitiesData : FALLBACK_FACILITIES;
+        const aboutContents = asList(aboutContentList);
+        const teamList = asList(teamData);
+        const facilitiesList = asList(facilitiesData);
+
+        const aboutContent = aboutContents.length > 0 ? aboutContents[0] : null;
+        const activeTeam = teamList.length > 0 ? teamList : FALLBACK_TEAM;
+        const activeFacilities = facilitiesList.length > 0 ? facilitiesList : FALLBACK_FACILITIES;
 
         const renderIcon = (iconName: string) => {
             const icons: { [key: string]: any } = { Shield, Sparkles, Star, Award, Compass, Heart };
