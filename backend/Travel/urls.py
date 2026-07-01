@@ -20,7 +20,7 @@ def health_check_view(request):
     return JsonResponse({"status": "healthy"})
 
 urlpatterns = [
-    path('admin/', admin.site.urls),
+    path('django-admin/', admin.site.urls),
     path('api/health/', health_check_view, name='health-check'),
     path('api/schema/', SpectacularAPIView.as_view(), name='schema'),
     path('api/docs/', SpectacularSwaggerView.as_view(url_name='schema'), name='swagger-ui'),
@@ -40,7 +40,7 @@ urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 if settings.DEBUG:
     urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
 
-# React SPA catch-all: serve index.html for any non-API, non-admin, non-media route
+# React SPA catch-all: serve index.html for any non-API, non-Django-admin, non-media route
 # This enables React Router client-side routing to work on cPanel
 REACT_INDEX = os.path.join(settings.BASE_DIR.parent, 'frontend', 'dist', 'index.html')
 if os.path.exists(REACT_INDEX):
@@ -56,5 +56,5 @@ if os.path.exists(REACT_INDEX):
 
     urlpatterns += [
         re_path(r'^assets/(?P<path>.*)$', static_serve, {'document_root': REACT_ASSETS}),
-        re_path(r'^(?!api/|admin/|media/|static/|assets/).*$', serve_react),
+        re_path(r'^(?!api/|django-admin/|media/|static/|assets/).*$', serve_react),
     ]

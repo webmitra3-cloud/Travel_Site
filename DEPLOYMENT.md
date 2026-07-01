@@ -115,6 +115,19 @@ CORS_ALLOWED_ORIGINS=http://regalrivulet.com,http://www.regalrivulet.com,https:/
 CSRF_TRUSTED_ORIGINS=http://regalrivulet.com,http://www.regalrivulet.com,http://api.regalrivulet.com,https://regalrivulet.com,https://www.regalrivulet.com,https://api.regalrivulet.com
 FRONTEND_URL=http://regalrivulet.com
 
+React admin panel:
+
+```text
+http://regalrivulet.com/admin
+http://api.regalrivulet.com/admin
+```
+
+Django backend admin:
+
+```text
+http://api.regalrivulet.com/django-admin/
+```
+
 Frontend production build must use:
 
 ```env
