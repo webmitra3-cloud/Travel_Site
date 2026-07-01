@@ -162,6 +162,9 @@ if REACT_BUILD_DIR.exists():
 
 # WhiteNoise for serving static files in production without a separate web server
 STORAGES = {
+    "default": {
+        "BACKEND": "django.core.files.storage.FileSystemStorage",
+    },
     "staticfiles": {
         "BACKEND": "whitenoise.storage.CompressedManifestStaticFilesStorage",
     },
@@ -267,7 +270,9 @@ if CLOUDINARY_CLOUD_NAME:
             'API_KEY': os.getenv('CLOUDINARY_API_KEY'),
             'API_SECRET': os.getenv('CLOUDINARY_API_SECRET'),
         }
-        DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'
+        STORAGES["default"] = {
+            "BACKEND": "cloudinary_storage.storage.MediaCloudinaryStorage",
+        }
     except ImportError:
         pass
 

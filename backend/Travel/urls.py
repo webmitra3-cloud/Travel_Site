@@ -3,14 +3,12 @@ URL configuration for Travel project.
 Configured for cPanel deployment with React SPA catch-all.
 """
 from django.contrib import admin
-from django.urls import path, include, re_path
+from django.urls import path, include
 from django.conf import settings
 from django.conf.urls.static import static
 from django.http import JsonResponse
-from django.views.generic import TemplateView
 from drf_spectacular.views import SpectacularAPIView, SpectacularSwaggerView
 from Travel.dashboard_views import AdminDashboardStatsView, CustomerDashboardStatsView
-import os
 
 admin.site.site_header = "Regal Rivulet Administration"
 admin.site.site_title = "Regal Rivulet Admin"
@@ -19,7 +17,16 @@ admin.site.index_title = "Hotel Operations Dashboard"
 def health_check_view(request):
     return JsonResponse({"status": "healthy"})
 
+def api_root_view(request):
+    return JsonResponse({
+        "name": "Regal Rivulet API",
+        "status": "running",
+        "health": "/api/health/",
+        "docs": "/api/docs/",
+    })
+
 urlpatterns = [
+    path('', api_root_view, name='api-root'),
     path('django-admin/', admin.site.urls),
     path('api/health/', health_check_view, name='health-check'),
     path('api/schema/', SpectacularAPIView.as_view(), name='schema'),
@@ -39,22 +46,3 @@ urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 
 if settings.DEBUG:
     urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
-
-# React SPA catch-all: serve index.html for any non-API, non-Django-admin, non-media route
-# This enables React Router client-side routing to work on cPanel
-REACT_INDEX = os.path.join(settings.BASE_DIR.parent, 'frontend', 'dist', 'index.html')
-if os.path.exists(REACT_INDEX):
-    from django.views.static import serve as static_serve
-    from django.http import HttpResponse
-
-    def serve_react(request):
-        with open(REACT_INDEX, 'r') as f:
-            return HttpResponse(f.read(), content_type='text/html')
-
-    REACT_DIST = os.path.dirname(REACT_INDEX)
-    REACT_ASSETS = os.path.join(REACT_DIST, 'assets')
-
-    urlpatterns += [
-        re_path(r'^assets/(?P<path>.*)$', static_serve, {'document_root': REACT_ASSETS}),
-        re_path(r'^(?!api/|django-admin/|media/|static/|assets/).*$', serve_react),
-    ]
