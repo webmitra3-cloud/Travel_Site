@@ -31,7 +31,10 @@ const Login = () => {
     const onSubmit = async (data: LoginForm) => {
         try {
             setError('');
-            const response = await api.post('/users/login/', data);
+            const response = await api.post('/users/login/', {
+                email: data.email.trim().toLowerCase(),
+                password: data.password.trim(),
+            });
             
             // Extract from DRF Simple JWT response
             const token = response.data.access;
