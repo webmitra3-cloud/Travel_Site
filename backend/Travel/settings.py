@@ -13,7 +13,8 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 PROJECT_ROOT = BASE_DIR.parent
 
 # Load deployment config from either backend/.env or the project root .env.
-load_dotenv(PROJECT_ROOT / '.env')
+# Project env files intentionally override generic machine env vars like DEBUG=release.
+load_dotenv(PROJECT_ROOT / '.env', override=True)
 load_dotenv(BASE_DIR / '.env', override=True)
 
 
@@ -108,24 +109,35 @@ WSGI_APPLICATION = 'Travel.wsgi.application'
 # Database Configuration
 # Supports both MySQL (cPanel default) and PostgreSQL
 
-DB_ENGINE = os.getenv('DB_ENGINE', 'django.db.backends.mysql')
+DB_ENGINE = os.getenv(
+    'DB_ENGINE',
+    'django.db.backends.sqlite3' if DEBUG else 'django.db.backends.mysql',
+)
 
 # Try DATABASE_URL first, then fall back to individual settings
 import dj_database_url
 
-DATABASES = {
-    'default': dj_database_url.config(
-        default=os.getenv('DATABASE_URL'),
-        conn_max_age=600,
-        conn_health_checks=True,
-    )
-}
+DATABASE_URL = os.getenv('DATABASE_URL')
+DATABASES = {}
+if DATABASE_URL:
+    DATABASES = {
+        'default': dj_database_url.config(
+            default=DATABASE_URL,
+            conn_max_age=600,
+            conn_health_checks=True,
+        )
+    }
 
-if not DATABASES['default']:
+if 'default' not in DATABASES or not DATABASES['default']:
+    if DB_ENGINE == 'django.db.backends.sqlite3':
+        db_name = os.getenv('SQLITE_DB_NAME', PROJECT_ROOT / 'local.sqlite3')
+    else:
+        db_name = os.getenv('DB_NAME', 'Travel')
+
     DATABASES = {
         'default': {
             'ENGINE': DB_ENGINE,
-            'NAME': os.getenv('DB_NAME', 'Travel'),
+            'NAME': db_name,
             'USER': os.getenv('DB_USER', 'Travel'),
             'PASSWORD': os.getenv('DB_PASSWORD', ''),
             'HOST': os.getenv('DB_HOST', 'localhost'),
@@ -180,6 +192,8 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 # CORS / CSRF
 REQUIRED_FRONTEND_ORIGINS = [
+    'http://localhost:5173',
+    'http://127.0.0.1:5173',
     'http://regalrivulet.com',
     'http://www.regalrivulet.com',
     'https://regalrivulet.com',
@@ -189,11 +203,13 @@ REQUIRED_FRONTEND_ORIGINS = [
 REQUIRED_CSRF_ORIGINS = REQUIRED_FRONTEND_ORIGINS + [
     'http://api.regalrivulet.com',
     'https://api.regalrivulet.com',
+    'http://localhost:8000',
+    'http://127.0.0.1:8000',
 ]
 
 CORS_ALLOWED_ORIGINS = merge_unique(env_list(
     'CORS_ALLOWED_ORIGINS',
-    'http://regalrivulet.com,http://www.regalrivulet.com,https://regalrivulet.com,https://www.regalrivulet.com',
+    'http://localhost:5173,http://127.0.0.1:5173,http://regalrivulet.com,http://www.regalrivulet.com,https://regalrivulet.com,https://www.regalrivulet.com',
 ), REQUIRED_FRONTEND_ORIGINS)
 CORS_ALLOWED_ORIGIN_REGEXES = [
     r'^https?://(www\.)?regalrivulet\.com$',
@@ -201,7 +217,7 @@ CORS_ALLOWED_ORIGIN_REGEXES = [
 CORS_ALLOW_ALL_ORIGINS = os.getenv('CORS_ALLOW_ALL_ORIGINS', 'False') == 'True'
 CSRF_TRUSTED_ORIGINS = merge_unique(env_list(
     'CSRF_TRUSTED_ORIGINS',
-    'http://regalrivulet.com,http://www.regalrivulet.com,http://api.regalrivulet.com,https://regalrivulet.com,https://www.regalrivulet.com,https://api.regalrivulet.com',
+    'http://localhost:5173,http://127.0.0.1:5173,http://localhost:8000,http://127.0.0.1:8000,http://regalrivulet.com,http://www.regalrivulet.com,http://api.regalrivulet.com,https://regalrivulet.com,https://www.regalrivulet.com,https://api.regalrivulet.com',
 ), REQUIRED_CSRF_ORIGINS)
 
 # REST Framework

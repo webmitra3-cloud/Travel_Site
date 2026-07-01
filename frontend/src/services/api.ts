@@ -1,5 +1,10 @@
 import axios from 'axios';
 
+const normalizeBaseUrl = (url: string) => {
+  const trimmed = url.trim();
+  return trimmed.endsWith('/') ? trimmed : `${trimmed}/`;
+};
+
 const getProcessEnv = () => {
   try {
     return (globalThis as any).process?.env?.REACT_APP_API_URL;
@@ -8,10 +13,25 @@ const getProcessEnv = () => {
   }
 };
 
-const API_BASE_URL = 
-  import.meta.env.VITE_API_URL || 
-  getProcessEnv() || 
-  '/api/';
+const getDefaultApiBaseUrl = () => {
+  if (typeof window === 'undefined') {
+    return '/api/';
+  }
+
+  const hostname = window.location.hostname;
+
+  if (hostname === 'regalrivulet.com' || hostname === 'www.regalrivulet.com') {
+    return `${window.location.protocol}//api.regalrivulet.com/api/`;
+  }
+
+  return '/api/';
+};
+
+const API_BASE_URL = normalizeBaseUrl(
+  import.meta.env.VITE_API_URL ||
+  getProcessEnv() ||
+  getDefaultApiBaseUrl()
+);
 
 const api = axios.create({
   baseURL: API_BASE_URL,
