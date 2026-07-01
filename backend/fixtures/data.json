@@ -240,5 +240,17 @@
       "created_at": "2026-07-01T00:00:00Z",
       "updated_at": "2026-07-01T00:00:00Z"
     }
+  },
+  {
+    "model": "vacancies.announcement",
+    "pk": "dddddddd-dddd-dddd-dddd-dddddddddd01",
+    "fields": {
+      "vacancy": "cccccccc-cccc-cccc-cccc-ccccccccccc1",
+      "title": "We are hiring: Hotel Manager!",
+      "message": "Apply now for the position of Hotel Manager in our Hotel Operations department at Singapore.",
+      "active": true,
+      "created_at": "2026-07-01T00:00:00Z",
+      "updated_at": "2026-07-01T00:00:00Z"
+    }
   }
 ]

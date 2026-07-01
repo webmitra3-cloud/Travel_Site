@@ -78,5 +78,19 @@ class ActiveAnnouncementListView(generics.ListAPIView):
     permission_classes = [permissions.AllowAny]
 
     def get_queryset(self):
+        open_vacancies = Vacancy.objects.filter(published=True, status='OPEN')
+        existing_vacancy_ids = Announcement.objects.filter(
+            vacancy__in=open_vacancies
+        ).values_list('vacancy_id', flat=True)
+
+        missing_vacancies = open_vacancies.exclude(id__in=existing_vacancy_ids)
+        for vacancy in missing_vacancies:
+            Announcement.objects.create(
+                vacancy=vacancy,
+                title=f'We are hiring: {vacancy.job_title}!',
+                message=f'Apply now for the position of {vacancy.job_title} in our {vacancy.department} department at {vacancy.location}.',
+                active=True,
+            )
+
         # Return announcements where active=True and the associated vacancy is still published and open
         return Announcement.objects.filter(active=True, vacancy__published=True, vacancy__status='OPEN')
