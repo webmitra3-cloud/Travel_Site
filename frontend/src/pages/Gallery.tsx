@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { useQuery } from '@tanstack/react-query';
 import { Helmet } from 'react-helmet-async';
 import api from '../services/api';
-import { X, ZoomIn } from 'lucide-react';
+import { ImageOff, X, ZoomIn } from 'lucide-react';
 
 const FALLBACK_GALLERY: any[] = [];
 
@@ -10,6 +10,43 @@ const asList = (data: any) => {
     if (Array.isArray(data)) return data;
     if (Array.isArray(data?.results)) return data.results;
     return [];
+};
+
+const GalleryImage = ({ item, onOpen }: { item: any; onOpen: (image: string) => void }) => {
+    const [failed, setFailed] = useState(false);
+    const canShowImage = item.image && !failed;
+
+    return (
+        <div
+            onClick={() => canShowImage && onOpen(item.image)}
+            className={`break-inside-avoid bg-white dark:bg-charcoal p-1.5 rounded-lg border border-gray-100 dark:border-gray-800 shadow-md group relative overflow-hidden ${
+                canShowImage ? 'cursor-zoom-in' : 'cursor-default'
+            }`}
+        >
+            {canShowImage ? (
+                <img
+                    src={item.image}
+                    alt={item.title}
+                    onError={() => setFailed(true)}
+                    className="w-full min-h-64 rounded object-cover group-hover:scale-[1.02] transition-transform duration-300"
+                />
+            ) : (
+                <div className="min-h-64 rounded bg-gradient-to-br from-gray-100 via-white to-primary/10 dark:from-charcoal-light dark:via-charcoal dark:to-primary/10 flex flex-col items-center justify-center text-center p-6">
+                    <ImageOff className="h-9 w-9 text-primary mb-3" />
+                    <span className="text-[10px] text-primary uppercase font-bold tracking-widest">{item.category_name || 'Gallery'}</span>
+                    <h3 className="font-playfair text-lg font-bold mt-1 text-gray-900 dark:text-white">{item.title}</h3>
+                </div>
+            )}
+
+            {canShowImage && (
+                <div className="absolute inset-0 bg-charcoal/60 opacity-0 group-hover:opacity-100 transition-opacity flex flex-col justify-end p-4 text-white">
+                    <span className="text-[10px] text-primary uppercase font-bold tracking-widest">{item.category_name}</span>
+                    <h3 className="font-playfair text-sm font-bold mt-0.5">{item.title}</h3>
+                    <ZoomIn className="h-5 w-5 text-gray-300 absolute top-4 right-4" />
+                </div>
+            )}
+        </div>
+    );
 };
 
 const Gallery = () => {
@@ -86,24 +123,7 @@ const Gallery = () => {
             ) : (
                 <div className="columns-1 sm:columns-2 md:columns-3 lg:columns-4 gap-4 space-y-4">
                     {activeItems.map((item: any) => (
-                        <div 
-                            key={item.id} 
-                            onClick={() => setActiveImage(item.image)}
-                            className="break-inside-avoid bg-white dark:bg-charcoal p-1.5 rounded-lg border border-gray-100 dark:border-gray-800 shadow-md group relative overflow-hidden cursor-zoom-in"
-                        >
-                            <img 
-                                src={item.image} 
-                                alt={item.title} 
-                                className="w-full rounded object-cover group-hover:scale-[1.02] transition-transform duration-300" 
-                            />
-                            
-                            {/* Hover info overlay */}
-                            <div className="absolute inset-0 bg-charcoal/60 opacity-0 group-hover:opacity-100 transition-opacity flex flex-col justify-end p-4 text-white">
-                                <span className="text-[10px] text-primary uppercase font-bold tracking-widest">{item.category_name}</span>
-                                <h3 className="font-playfair text-sm font-bold mt-0.5">{item.title}</h3>
-                                <ZoomIn className="h-5 w-5 text-gray-300 absolute top-4 right-4" />
-                            </div>
-                        </div>
+                        <GalleryImage key={item.id} item={item} onOpen={setActiveImage} />
                     ))}
                 </div>
             )}
