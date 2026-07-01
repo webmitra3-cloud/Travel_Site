@@ -12,6 +12,10 @@ from drf_spectacular.views import SpectacularAPIView, SpectacularSwaggerView
 from Travel.dashboard_views import AdminDashboardStatsView, CustomerDashboardStatsView
 import os
 
+admin.site.site_header = "Regal Rivulet Administration"
+admin.site.site_title = "Regal Rivulet Admin"
+admin.site.index_title = "Hotel Operations Dashboard"
+
 def health_check_view(request):
     return JsonResponse({"status": "healthy"})
 

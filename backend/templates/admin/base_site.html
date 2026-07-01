@@ -1,0 +1,108 @@
+{% extends "admin/base_site.html" %}
+
+{% block branding %}
+<div class="regal-admin-brand">
+  <span class="regal-admin-title">Regal Rivulet</span>
+  <span class="regal-admin-subtitle">Hotel Operations Administration</span>
+</div>
+{% endblock %}
+
+{% block extrastyle %}{{ block.super }}
+<style>
+  :root {
+    --primary: #d4af37;
+    --secondary: #111827;
+    --accent: #d4af37;
+    --primary-fg: #111827;
+    --body-fg: #1f2937;
+    --body-bg: #f8fafc;
+    --header-color: #f8fafc;
+    --header-branding-color: #d4af37;
+    --link-fg: #25637a;
+    --link-hover-color: #d4af37;
+    --breadcrumbs-bg: #243447;
+  }
+
+  #header {
+    background: #111827;
+    color: #f8fafc;
+    min-height: 72px;
+    border-bottom: 3px solid #d4af37;
+  }
+
+  #branding h1,
+  #branding h1 a:link,
+  #branding h1 a:visited {
+    color: #d4af37;
+  }
+
+  .regal-admin-brand {
+    display: flex;
+    flex-direction: column;
+    line-height: 1.1;
+  }
+
+  .regal-admin-title {
+    color: #d4af37;
+    font-size: 28px;
+    font-weight: 700;
+    letter-spacing: .08em;
+  }
+
+  .regal-admin-subtitle {
+    color: #cbd5e1;
+    font-size: 11px;
+    letter-spacing: .18em;
+    text-transform: uppercase;
+    margin-top: 4px;
+  }
+
+  div.breadcrumbs {
+    background: #243447;
+    color: #e5e7eb;
+  }
+
+  .module h2,
+  .module caption,
+  .inline-group h2 {
+    background: #25637a;
+    color: #fff;
+    letter-spacing: .04em;
+  }
+
+  a:link,
+  a:visited {
+    color: #25637a;
+  }
+
+  a:hover {
+    color: #b88f18;
+  }
+
+  .button,
+  input[type=submit],
+  input[type=button],
+  .submit-row input,
+  a.button {
+    background: #d4af37;
+    color: #111827;
+    border-radius: 4px;
+    font-weight: 700;
+  }
+
+  .button:hover,
+  input[type=submit]:hover,
+  input[type=button]:hover,
+  .submit-row input:hover,
+  a.button:hover {
+    background: #b88f18;
+  }
+
+  .button.default,
+  input[type=submit].default,
+  .submit-row input.default {
+    background: #111827;
+    color: #d4af37;
+  }
+</style>
+{% endblock %}

@@ -414,7 +414,7 @@ const Dashboard = () => {
                                     {/* Expiry / Confirmation voucher links */}
                                     {activeBooking.booking_status === 'CONFIRMED' && (
                                         <a 
-                                            href={(api.defaults.baseURL || 'http://localhost:8000/api/').replace(/\/api\/?$/, '/admin/')}
+                                            href={(api.defaults.baseURL || 'http://api.regalrivulet.com/api/').replace(/\/api\/?$/, '/admin/')}
                                             target="_blank"
                                             rel="noreferrer"
                                             className="flex items-center space-x-1 text-xs text-primary bg-primary/10 border border-primary/20 px-3 py-1.5 rounded shrink-0"

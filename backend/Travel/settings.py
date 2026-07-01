@@ -28,6 +28,16 @@ def env_list(name, default=''):
     return [item.strip() for item in value.split(',') if item.strip()]
 
 
+def merge_unique(*items):
+    merged = []
+    for item in items:
+        values = item if isinstance(item, list) else [item]
+        for value in values:
+            if value and value not in merged:
+                merged.append(value)
+    return merged
+
+
 ALLOWED_HOSTS = env_list(
     'ALLOWED_HOSTS',
     'api.regalrivulet.com,regalrivulet.com,www.regalrivulet.com,localhost,127.0.0.1',
@@ -80,7 +90,7 @@ ROOT_URLCONF = 'Travel.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [BASE_DIR / 'templates'],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -166,15 +176,30 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 
 # CORS / CSRF
-CORS_ALLOWED_ORIGINS = env_list(
+REQUIRED_FRONTEND_ORIGINS = [
+    'http://regalrivulet.com',
+    'http://www.regalrivulet.com',
+    'https://regalrivulet.com',
+    'https://www.regalrivulet.com',
+]
+
+REQUIRED_CSRF_ORIGINS = REQUIRED_FRONTEND_ORIGINS + [
+    'http://api.regalrivulet.com',
+    'https://api.regalrivulet.com',
+]
+
+CORS_ALLOWED_ORIGINS = merge_unique(env_list(
     'CORS_ALLOWED_ORIGINS',
-    'https://regalrivulet.com,https://www.regalrivulet.com',
-)
+    'http://regalrivulet.com,http://www.regalrivulet.com,https://regalrivulet.com,https://www.regalrivulet.com',
+), REQUIRED_FRONTEND_ORIGINS)
+CORS_ALLOWED_ORIGIN_REGEXES = [
+    r'^https?://(www\.)?regalrivulet\.com$',
+]
 CORS_ALLOW_ALL_ORIGINS = os.getenv('CORS_ALLOW_ALL_ORIGINS', 'False') == 'True'
-CSRF_TRUSTED_ORIGINS = env_list(
+CSRF_TRUSTED_ORIGINS = merge_unique(env_list(
     'CSRF_TRUSTED_ORIGINS',
-    'https://regalrivulet.com,https://www.regalrivulet.com,https://api.regalrivulet.com',
-)
+    'http://regalrivulet.com,http://www.regalrivulet.com,http://api.regalrivulet.com,https://regalrivulet.com,https://www.regalrivulet.com,https://api.regalrivulet.com',
+), REQUIRED_CSRF_ORIGINS)
 
 # REST Framework
 REST_FRAMEWORK = {
@@ -254,7 +279,7 @@ EMAIL_USE_TLS = os.getenv('EMAIL_USE_TLS', 'True') == 'True'
 EMAIL_HOST_USER = os.getenv('EMAIL_HOST_USER', '')
 EMAIL_HOST_PASSWORD = os.getenv('EMAIL_HOST_PASSWORD', '')
 DEFAULT_FROM_EMAIL = os.getenv('DEFAULT_FROM_EMAIL', 'Regal Rivulet Retreat Hotel <noreply@regalrivulet.com>')
-FRONTEND_URL = os.getenv('FRONTEND_URL', 'https://regalrivulet.com')
+FRONTEND_URL = os.getenv('FRONTEND_URL', 'http://regalrivulet.com')
 
 # Production security settings
 if not DEBUG:
